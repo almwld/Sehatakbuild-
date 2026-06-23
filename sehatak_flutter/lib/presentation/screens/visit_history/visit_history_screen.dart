@@ -28,17 +28,17 @@ class VisitHistoryScreen extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Container(width: 44, height: 44, decoration: BoxDecoration(color: (v['color'] as Color).withOpacity(0.1), borderRadius: BorderRadius.circular(10)), child: Center(child: Text(v['image'], style: const TextStyle(fontSize: 22)))),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(v['doctor'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)), Text(v['specialty'], style: const TextStyle(fontSize: 11, color: AppColors.grey)), Text(v['date'], style: const TextStyle(fontSize: 10, color: AppColors.grey))])),
                 Text('${v['fee']} ر.س', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 16)),
               ]),
               const Divider(height: 16),
               _detailRow('السبب', v['reason']),
               _detailRow('التشخيص', v['diagnosis']),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               Row(children: [
                 Expanded(child: OutlinedButton(onPressed: () {}, style: OutlinedButton.styleFrom(foregroundColor: AppColors.primary), child: const Text('تقرير'))),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(child: ElevatedButton(onPressed: () {}, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary), child: const Text('إعادة حجز'))),
               ]),
             ]),

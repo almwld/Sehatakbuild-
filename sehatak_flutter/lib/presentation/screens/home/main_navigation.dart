@@ -91,7 +91,7 @@ class _MainNavigationState extends State<MainNavigation> {
                           color: isSelected ? AppColors.primary : AppColors.grey,
                           size: 24,
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           _titles[index],
                           style: TextStyle(

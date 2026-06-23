@@ -34,7 +34,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.success, AppColors.teal]), borderRadius: BorderRadius.circular(14)),
           child: Row(children: [
             const Icon(Icons.shopping_cart_checkout, color: Colors.white, size: 32),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('$done/${_items.length} مكتمل', style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
               LinearProgressIndicator(value: done / _items.length, backgroundColor: Colors.white24, color: Colors.white, minHeight: 4, borderRadius: BorderRadius.circular(2)),
@@ -54,7 +54,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                 child: CheckboxListTile(
                   value: item['done'],
                   activeColor: AppColors.success,
-                  title: Row(children: [Text(item['icon'], style: const TextStyle(fontSize: 20)), SizedBox(width: 8), Text(item['name'], style: TextStyle(fontSize: 13, decoration: item['done'] ? TextDecoration.lineThrough : null, color: item['done'] ? AppColors.grey : null))]),
+                  title: Row(children: [Text(item['icon'], style: const TextStyle(fontSize: 20)), const SizedBox(width: 8), Text(item['name'], style: TextStyle(fontSize: 13, decoration: item['done'] ? TextDecoration.lineThrough : null, color: item['done'] ? AppColors.grey : null))]),
                   subtitle: Text(item['category'], style: const TextStyle(fontSize: 9, color: AppColors.grey)),
                   onChanged: (v) => setState(() => item['done'] = v),
                 ),
@@ -64,7 +64,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ),
         Container(padding: const EdgeInsets.all(10), color: Colors.white, child: Row(children: [
           Expanded(child: TextField(controller: _addController, textAlign: TextAlign.right, decoration: InputDecoration(hintText: 'أضف منتجاً...', filled: true, fillColor: AppColors.surfaceContainerLow, border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none), contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8)))),
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
           CircleAvatar(backgroundColor: AppColors.success, child: IconButton(icon: const Icon(Icons.add, color: Colors.white), onPressed: () { if (_addController.text.isNotEmpty) { setState(() => _items.add({'name': _addController.text, 'category': 'عام', 'done': false, 'icon': '🛒'})); _addController.clear(); } })),
         ])),
       ]),

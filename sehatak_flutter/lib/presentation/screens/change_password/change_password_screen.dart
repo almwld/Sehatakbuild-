@@ -87,7 +87,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               child: const Icon(Icons.lock_outline, color: AppColors.primary, size: 40),
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // كلمة المرور الحالية
           TextField(
@@ -104,7 +104,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               fillColor: AppColors.surfaceContainerLow.withOpacity(0.3),
             ),
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
 
           // كلمة المرور الجديدة
           TextField(
@@ -124,19 +124,19 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
           // مؤشر القوة
           if (_newPasswordController.text.isNotEmpty) ...[
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(children: [
               const Text('قوة كلمة المرور: ', style: TextStyle(fontSize: 12, color: AppColors.grey)),
               Text(_passwordStrength, style: TextStyle(fontWeight: FontWeight.bold, color: _strengthColor, fontSize: 12)),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(child: LinearProgressIndicator(
                 value: _passwordStrength == 'ضعيفة' ? 0.25 : _passwordStrength == 'متوسطة' ? 0.5 : _passwordStrength == 'قوية' ? 0.75 : 1.0,
                 color: _strengthColor, backgroundColor: AppColors.surfaceContainerLow, minHeight: 4, borderRadius: BorderRadius.circular(2),
               )),
             ]),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
           ],
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
 
           // تأكيد كلمة المرور
           TextField(
@@ -155,14 +155,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
           // رسالة التطابق
           if (_confirmPasswordController.text.isNotEmpty) ...[
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Row(children: [
               Icon(_newPasswordController.text == _confirmPasswordController.text ? Icons.check_circle : Icons.cancel, size: 14, color: _newPasswordController.text == _confirmPasswordController.text ? AppColors.success : AppColors.error),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Text(_newPasswordController.text == _confirmPasswordController.text ? 'كلمتا المرور متطابقتان' : 'كلمتا المرور غير متطابقتين', style: TextStyle(fontSize: 11, color: _newPasswordController.text == _confirmPasswordController.text ? AppColors.success : AppColors.error)),
             ]),
           ],
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // نصائح
           Container(
@@ -178,11 +178,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Text('• لا تستخدم كلمة المرور نفسها لحسابات أخرى', style: TextStyle(fontSize: 11)),
             ]),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // زر الحفظ
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _canSave() ? _savePassword : null, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14), disabledBackgroundColor: AppColors.grey.withOpacity(0.3)), child: const Text('حفظ كلمة المرور الجديدة', style: TextStyle(fontSize: 16)))),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
         ]),
       ),
     );

@@ -16,7 +16,7 @@ class HomeCareScreen extends StatelessWidget {
             decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]), borderRadius: BorderRadius.circular(16)),
             child: const Column(children: [Icon(Icons.home, color: Colors.white, size: 40), SizedBox(height: 8), Text('رعاية صحية في منزلك', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)), Text('خدمات طبية تصل إلى باب بيتك', style: TextStyle(color: Colors.white70, fontSize: 12))]),
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           GridView.count(
             crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: 0.9,
             children: [
@@ -41,10 +41,10 @@ class HomeCareScreen extends StatelessWidget {
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(icon, style: const TextStyle(fontSize: 36)),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
         Text(desc, style: const TextStyle(fontSize: 9, color: AppColors.grey)),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: color.withOpacity(0.08), borderRadius: BorderRadius.circular(4)), child: Text('$price ر.س • $duration', style: TextStyle(fontSize: 9, color: color))),
       ]),
     );

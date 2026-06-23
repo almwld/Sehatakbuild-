@@ -37,14 +37,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Positioned(bottom: 0, right: 0, child: Container(padding: const EdgeInsets.all(6), decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle), child: const Icon(Icons.camera_alt, color: Colors.white, size: 18))),
             ]),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // المعلومات الأساسية
           _sectionTitle('المعلومات الأساسية'),
           _textField('الاسم الكامل', Icons.person, _nameController),
           _textField('البريد الإلكتروني', Icons.email, _emailController, keyboardType: TextInputType.emailAddress),
           _textField('رقم الهاتف', Icons.phone, _phoneController, keyboardType: TextInputType.phone),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
 
           // المعلومات الشخصية
           _sectionTitle('المعلومات الشخصية'),
@@ -52,30 +52,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           _dateField('تاريخ الميلاد', Icons.cake, _birthDate, (d) => setState(() => _birthDate = d)),
           _dropdownField('فصيلة الدم', Icons.bloodtype, _bloodType, ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'], (v) => setState(() => _bloodType = v!)),
           _textField('العنوان', Icons.location_on, _addressController),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
 
           // القياسات
           _sectionTitle('القياسات الجسمية'),
           _sliderField('الطول', '${_height.toInt()} سم', _height, 100, 250, (v) => setState(() => _height = v)),
           _sliderField('الوزن', '${_weight.toInt()} كجم', _weight, 30, 200, (v) => setState(() => _weight = v)),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
 
           // اتصال الطوارئ
           _sectionTitle('جهة اتصال طوارئ'),
           _textField('اسم جهة الاتصال', Icons.contact_emergency, _emergencyContactController),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(color: AppColors.info.withOpacity(0.05), borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.info.withOpacity(0.2))),
             child: const Row(children: [Icon(Icons.info, color: AppColors.info, size: 16), SizedBox(width: 8), Expanded(child: Text('سيتم التواصل مع هذا الرقم في الحالات الطارئة', style: TextStyle(fontSize: 10, color: AppColors.info)))]),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // أزرار
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {}, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('حفظ التغييرات', style: TextStyle(fontSize: 16)))),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => Navigator.pop(context), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('إلغاء'))),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ]),
       ),
     );

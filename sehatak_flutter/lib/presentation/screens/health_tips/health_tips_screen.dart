@@ -44,7 +44,7 @@ class _HealthTipsScreenState extends State<HealthTipsScreen> {
             margin: const EdgeInsets.only(bottom: 6),
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4)]),
-            child: Row(children: [Container(width: 32, height: 32, decoration: BoxDecoration(color: AppColors.success.withOpacity(0.1), shape: BoxShape.circle), child: const Icon(Icons.check, color: AppColors.success, size: 16)), SizedBox(width: 10), Expanded(child: Text(currentTips[i], style: const TextStyle(fontSize: 13, height: 1.4)))]),
+            child: Row(children: [Container(width: 32, height: 32, decoration: BoxDecoration(color: AppColors.success.withOpacity(0.1), shape: BoxShape.circle), child: const Icon(Icons.check, color: AppColors.success, size: 16)), const SizedBox(width: 10), Expanded(child: Text(currentTips[i], style: const TextStyle(fontSize: 13, height: 1.4)))]),
           )),
         ),
       ]),

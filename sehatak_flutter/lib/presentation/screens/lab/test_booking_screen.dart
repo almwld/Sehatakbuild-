@@ -39,7 +39,7 @@ class _TestBookingScreenState extends State<TestBookingScreen> {
                     decoration: BoxDecoration(color: AppColors.info.withOpacity(0.2), borderRadius: BorderRadius.circular(12)),
                     child: const Icon(Icons.science, color: AppColors.info),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,9 +52,9 @@ class _TestBookingScreenState extends State<TestBookingScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(AppStrings.selectDate, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Container(
               decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3), borderRadius: BorderRadius.circular(16)),
               child: TableCalendar(
@@ -77,9 +77,9 @@ class _TestBookingScreenState extends State<TestBookingScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(AppStrings.selectTime, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Wrap(
               spacing: 8,
               runSpacing: 8,
@@ -94,7 +94,7 @@ class _TestBookingScreenState extends State<TestBookingScreen> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             SwitchListTile(
               title: const Text('زيارة منزلية'),
               subtitle: const Text('سيصلك فريق المختبر إلى منزلك'),
@@ -102,7 +102,7 @@ class _TestBookingScreenState extends State<TestBookingScreen> {
               onChanged: (value) => setState(() => _homeVisit = value),
               activeColor: AppColors.info,
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
           ],
         ),
       ),
@@ -123,7 +123,7 @@ class _TestBookingScreenState extends State<TestBookingScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Icon(Icons.check_circle, color: AppColors.success, size: 80),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Text('تم الحجز بنجاح!', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
                     ],
                   ),

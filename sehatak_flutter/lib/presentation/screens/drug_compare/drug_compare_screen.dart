@@ -35,7 +35,7 @@ class _DrugCompareScreenState extends State<DrugCompareScreen> {
             const Text(' VS ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: AppColors.primary)),
             Expanded(child: _drop(_d2, (v) => setState(() => _d2 = v!))),
           ]),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Table(
             border: TableBorder.all(color: AppColors.outlineVariant.withOpacity(0.3)),
             children: [

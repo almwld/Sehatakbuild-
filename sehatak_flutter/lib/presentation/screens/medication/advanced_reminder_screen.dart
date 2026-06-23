@@ -32,17 +32,17 @@ class _AdvancedReminderScreenState extends State<AdvancedReminderScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Container(width: 44, height: 44, decoration: BoxDecoration(color: (m['color'] as Color).withOpacity(0.08), borderRadius: BorderRadius.circular(10)), child: Center(child: Text(m['icon'], style: const TextStyle(fontSize: 22)))),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(m['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                   Text(m['time'], style: const TextStyle(fontSize: 11, color: AppColors.grey)),
                 ])),
                 Checkbox(value: m['taken'], activeColor: AppColors.success, onChanged: (v) => setState(() => m['taken'] = v)),
               ]),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(children: [
                 Expanded(child: LinearProgressIndicator(value: (m['remaining'] as int) / (m['total'] as int), backgroundColor: AppColors.surfaceContainerLow, color: needsRefill ? AppColors.error : AppColors.success, minHeight: 5, borderRadius: BorderRadius.circular(3))),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text('${m['remaining']}/${m['total']}', style: TextStyle(fontSize: 11, color: needsRefill ? AppColors.error : AppColors.grey)),
               ]),
               if (needsRefill)
@@ -50,12 +50,12 @@ class _AdvancedReminderScreenState extends State<AdvancedReminderScreen> {
                   margin: const EdgeInsets.only(top: 8),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(color: AppColors.error.withOpacity(0.05), borderRadius: BorderRadius.circular(8)),
-                  child: Row(children: [const Icon(Icons.warning, color: AppColors.error, size: 14), SizedBox(width: 4), Text('يحتاج إعادة تعبئة قبل ${m['refill']}', style: const TextStyle(color: AppColors.error, fontSize: 10))]),
+                  child: Row(children: [const Icon(Icons.warning, color: AppColors.error, size: 14), const SizedBox(width: 4), Text('يحتاج إعادة تعبئة قبل ${m['refill']}', style: const TextStyle(color: AppColors.error, fontSize: 10))]),
                 ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: OutlinedButton(onPressed: () {}, child: const Text('تأجيل', style: TextStyle(fontSize: 10)))),
-                SizedBox(width: 6),
+                const SizedBox(width: 6),
                 Expanded(child: ElevatedButton(onPressed: () {}, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary), child: const Text('إعادة تعبئة', style: TextStyle(fontSize: 10)))),
               ]),
             ]),

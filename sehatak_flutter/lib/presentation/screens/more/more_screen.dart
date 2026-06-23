@@ -1,4 +1,3 @@
-import 'package:sehatak/presentation/screens/cart/cart_screen.dart';
 import 'package:sehatak/presentation/screens/health_map/health_map_screen.dart';
 import 'package:sehatak/presentation/screens/physiotherapy/physiotherapy_screen.dart';
 import 'package:sehatak/presentation/screens/family_planning/family_planning_screen.dart';
@@ -102,7 +101,7 @@ class MoreScreen extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // ========= خدمات سريعة =========
           Text('خدمات سريعة', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           GridView.count(
             crossAxisCount: 4, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: 10, crossAxisSpacing: 8, childAspectRatio: 0.85,
@@ -117,22 +116,22 @@ class MoreScreen extends StatelessWidget {
               _serviceItem(context, Icons.directions_car, 'إسعاف', AppColors.warning, () => Navigator.push(context, MaterialPageRoute(builder: (_) => const EmergencyNumbers()))),
             ],
           ),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========= الرعاية الصحية =========
           Text('الرعاية الصحية', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _menuItem(context, Icons.calendar_month_rounded, 'مواعيدي', 'عرض وإدارة المواعيد', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PatientAppointments()))),
           _menuItem(context, Icons.receipt_long, 'الوصفات الطبية', 'عرض الوصفات', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PatientPrescriptions()))),
           _menuItem(context, Icons.folder_shared, 'السجل الطبي', 'سجل صحي كامل', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PatientMedicalHistory()))),
           _menuItem(context, Icons.chat_bubble_rounded, 'استشارات', 'تحدث مع طبيب', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ChatScreen()))),
           _menuItem(context, Icons.videocam, 'استشارة فيديو', 'مكالمة مباشرة', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const VideoConsultScreen()))),
           _menuItem(context, Icons.history, 'سجل الزيارات', 'تاريخ زياراتك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const VisitHistoryScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========= خدمات متخصصة =========
           Text('خدمات متخصصة', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _menuItem(context, Icons.tips_and_updates, 'نصائح صحية', 'نصائح يومية مفيدة', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HealthTipsScreen()))),
           _menuItem(context, Icons.female, 'صحة المرأة', 'تتبع الدورة الشهرية', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PeriodTrackerScreen()))),
           _menuItem(context, Icons.home_work, 'خدمات منزلية', 'رعاية في منزلك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeCareScreen()))),
@@ -140,11 +139,11 @@ class MoreScreen extends StatelessWidget {
           _menuItem(context, Icons.pregnant_woman, 'متابعة الحمل', 'أسبوع بأسبوع', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PregnancyTrackerScreen()))),
           _menuItem(context, Icons.child_care, 'نمو الطفل', 'مراحل التطور', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ChildGrowthScreen()))),
           _menuItem(context, Icons.vaccines, 'سجل التطعيمات', 'تطعيماتك كاملة', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const VaccinationScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========= أدوات صحية =========
           Text('أدوات صحية', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _menuItem(context, Icons.medical_services, 'إسعافات أولية', 'دليل الطوارئ', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FirstAidScreen()))),
           _menuItem(context, Icons.sick, 'فحص الأعراض', 'حلل أعراضك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SymptomCheckerScreen()))),
           _menuItem(context, Icons.smart_toy, 'العيادة الذكية', 'AI تحليل أعراضك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SmartClinicScreen()))),
@@ -152,11 +151,11 @@ class MoreScreen extends StatelessWidget {
           _menuItem(context, Icons.monitor_weight, 'حاسبة BMI', 'اعرف وزنك المثالي', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BMICalculatorScreen()))),
           _menuItem(context, Icons.calculate, 'حاسبة السعرات', 'احسب سعرات طعامك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CalorieCalculatorScreen()))),
           _menuItem(context, Icons.favorite, 'معدل القلب', 'نبضات القلب والتمارين', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HeartRateScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========= متابعة صحية =========
           Text('متابعة صحية', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _menuItem(context, Icons.alarm, 'تذكير الأدوية', 'لا تنس جرعاتك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MedicationReminderScreen()))),
           _menuItem(context, Icons.notifications_active, 'تذكير متقدم', 'جرعات وإعادة تعبئة', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AdvancedReminderScreen()))),
           _menuItem(context, Icons.bedtime, 'تتبع النوم', 'جودة ومدة نومك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SleepTrackerScreen()))),
@@ -164,11 +163,11 @@ class MoreScreen extends StatelessWidget {
           _menuItem(context, Icons.monitor_heart, 'ضغط الدم', 'تتبع وسجل ضغطك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BloodPressureScreen()))),
           _menuItem(context, Icons.monitor_weight_outlined, 'تتبع الوزن', 'وزنك وBMI والهدف', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WeightTrackerScreen()))),
           _menuItem(context, Icons.bloodtype_outlined, 'تتبع السكر', 'قراءات الجلوكوز', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GlucoseTrackerScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========= خدمات أخرى =========
           Text('خدمات أخرى', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _menuItem(context, Icons.description, 'تقارير طبية', 'تقاريرك المخزنة', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MedicalReportsScreen()))),
           _menuItem(context, Icons.article, 'مقالات طبية', 'اقرأ أحدث المقالات', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ArticlesScreen()))),
           _menuItem(context, Icons.people, 'مجتمع صحتك', 'انضم للنقاشات الصحية', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HealthCommunityScreen()))),
@@ -181,7 +180,7 @@ class MoreScreen extends StatelessWidget {
           _menuItem(context, Icons.note_alt, 'ملاحظات طبية', 'دون ملاحظاتك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MedicalNotesScreen()))),
           _menuItem(context, Icons.psychology_alt, 'مقياس التوتر', 'قِس مستوى توترك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const StressMeterScreen()))),
           _menuItem(context, Icons.mic, 'بحث صوتي', 'تحدث للبحث', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const VoiceSearchScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========= عام =========
           _menuItem(context, Icons.calendar_month, 'التقويم الصحي', 'مواعيدك وأحداثك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HealthCalendarScreen()))),
@@ -210,12 +209,12 @@ class MoreScreen extends StatelessWidget {
           _menuItem(context, Icons.eco, 'الطب البديل', 'علاجات طبيعية', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AlternativeMedicineScreen()))),
           _menuItem(context, Icons.map, 'خرائط المرافق', 'جميع المرافق الصحية', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HealthMapScreen()))),
           Text('عام', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _menuItem(context, Icons.notifications_active, 'الإشعارات', 'تنبيهاتك', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationsScreen()))),
           _menuItem(context, Icons.settings_rounded, 'الإعدادات', 'تفضيلات التطبيق', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()))),
           _menuItem(context, Icons.help_outline, 'المساعدة', 'أسئلة شائعة وتواصل', () {}),
           _menuItem(context, Icons.share_rounded, 'مشاركة', 'شارك التطبيق', () {}),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
         ]),
       ),
     );
@@ -230,7 +229,7 @@ class MoreScreen extends StatelessWidget {
           decoration: BoxDecoration(color: color.withOpacity(0.08), shape: BoxShape.circle),
           child: Icon(icon, color: color, size: 22),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500), textAlign: TextAlign.center),
       ]),
     );

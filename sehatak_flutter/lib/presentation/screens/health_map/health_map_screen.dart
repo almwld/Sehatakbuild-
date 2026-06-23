@@ -56,7 +56,7 @@ class _HealthMapScreenState extends State<HealthMapScreen> {
           child: ListView.separated(
             scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             itemCount: ['الكل', 'مستشفيات', 'صيدليات', 'مختبرات', 'عيادات', 'مراكز طبية'].length,
-            separatorBuilder: (_, __) => SizedBox(width: 6),
+            separatorBuilder: (_, __) => const SizedBox(width: 6),
             itemBuilder: (context, i) {
               final cat = ['الكل', 'مستشفيات', 'صيدليات', 'مختبرات', 'عيادات', 'مراكز طبية'][i];
               final selected = _selectedCategory == cat;
@@ -89,7 +89,7 @@ class _HealthMapScreenState extends State<HealthMapScreen> {
                             : Center(child: Text(f['icon'], style: const TextStyle(fontSize: 50))),
                       ),
                       Positioned(top: 8, right: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(8)), child: Text(f['category'], style: const TextStyle(color: Colors.white, fontSize: 10)))),
-                      Positioned(top: 8, left: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: AppColors.amber, borderRadius: BorderRadius.circular(8)), child: Row(children: [const Icon(Icons.star, color: Colors.white, size: 12), SizedBox(width: 2), Text('${f['rating']}', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold))]))),
+                      Positioned(top: 8, left: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: AppColors.amber, borderRadius: BorderRadius.circular(8)), child: Row(children: [const Icon(Icons.star, color: Colors.white, size: 12), const SizedBox(width: 2), Text('${f['rating']}', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold))]))),
                     ]),
                   ),
                   // معلومات
@@ -98,21 +98,21 @@ class _HealthMapScreenState extends State<HealthMapScreen> {
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Row(children: [
                         Text(f['icon'], style: const TextStyle(fontSize: 22)),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(child: Text(f['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
                       ]),
-                      SizedBox(height: 4),
-                      Row(children: [const Icon(Icons.location_on, size: 14, color: AppColors.grey), SizedBox(width: 4), Expanded(child: Text(f['address'], style: const TextStyle(fontSize: 11, color: AppColors.grey)))]),
-                      SizedBox(height: 6),
+                      const SizedBox(height: 4),
+                      Row(children: [const Icon(Icons.location_on, size: 14, color: AppColors.grey), const SizedBox(width: 4), Expanded(child: Text(f['address'], style: const TextStyle(fontSize: 11, color: AppColors.grey)))]),
+                      const SizedBox(height: 6),
                       // تفاصيل حسب النوع
-                      if (f['category'] == 'مستشفيات') Row(children: [_tag('${f['beds']} سرير', AppColors.primary), SizedBox(width: 6), if (f['emergency']) _tag('طوارئ 24 ساعة', AppColors.error)]),
-                      if (f['category'] == 'صيدليات') Row(children: [_tag(f['hours'], AppColors.success), SizedBox(width: 6), if (f['delivery']) _tag('توصيل متاح', AppColors.info)]),
-                      if (f['category'] == 'مختبرات') Row(children: [_tag('${f['tests']} فحص', AppColors.info), SizedBox(width: 6), if (f['homeService']) _tag('خدمة منزلية', AppColors.success)]),
+                      if (f['category'] == 'مستشفيات') Row(children: [_tag('${f['beds']} سرير', AppColors.primary), const SizedBox(width: 6), if (f['emergency']) _tag('طوارئ 24 ساعة', AppColors.error)]),
+                      if (f['category'] == 'صيدليات') Row(children: [_tag(f['hours'], AppColors.success), const SizedBox(width: 6), if (f['delivery']) _tag('توصيل متاح', AppColors.info)]),
+                      if (f['category'] == 'مختبرات') Row(children: [_tag('${f['tests']} فحص', AppColors.info), const SizedBox(width: 6), if (f['homeService']) _tag('خدمة منزلية', AppColors.success)]),
                       if (f['category'] == 'عيادات' || f['category'] == 'مراكز طبية') Text(f['specialties'], style: const TextStyle(fontSize: 11, color: AppColors.primary)),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(children: [
                         Expanded(child: OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.call, size: 14), label: Text(f['phone'], style: const TextStyle(fontSize: 11)), style: OutlinedButton.styleFrom(foregroundColor: AppColors.success, padding: const EdgeInsets.symmetric(vertical: 8)))),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(child: ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.navigation, size: 14), label: const Text('توجيه', style: TextStyle(fontSize: 11)), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 8)))),
                       ]),
                     ]),

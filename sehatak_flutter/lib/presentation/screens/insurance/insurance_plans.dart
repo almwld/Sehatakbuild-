@@ -47,15 +47,15 @@ class InsurancePlans extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 ...((plan['coverage'] as List<String>).map((c) => Row(
                   children: [
                     const Icon(Icons.check_circle, color: AppColors.success, size: 16),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(c, style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ))),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(onPressed: () {}, child: const Text('اشترك الآن')),
               ],
             ),

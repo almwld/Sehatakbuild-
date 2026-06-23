@@ -50,10 +50,10 @@ class _VideoConsultScreenState extends State<VideoConsultScreen> {
                 decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primary.withOpacity(0.2), border: Border.all(color: AppColors.primary, width: 3)),
                 child: const Center(child: Text('👨‍⚕️', style: TextStyle(fontSize: 80))),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               const Text('د. حسن رضا', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
               const Text('طبيب عام • متصل', style: TextStyle(color: Colors.white60, fontSize: 13)),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(color: AppColors.success.withOpacity(0.2), borderRadius: BorderRadius.circular(12)), child: Text(_formattedTime, style: const TextStyle(color: AppColors.success, fontWeight: FontWeight.bold, fontSize: 14))),
             ]),
           ),
@@ -89,7 +89,7 @@ class _VideoConsultScreenState extends State<VideoConsultScreen> {
       onTap: onTap,
       child: Column(children: [
         Container(width: 50, height: 50, decoration: BoxDecoration(color: color.withOpacity(0.2), shape: BoxShape.circle), child: Icon(icon, color: color, size: 24)),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(label, style: const TextStyle(color: Colors.white, fontSize: 10)),
       ]),
     );

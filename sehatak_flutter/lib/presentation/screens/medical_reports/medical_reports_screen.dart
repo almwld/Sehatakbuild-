@@ -163,14 +163,14 @@ class _MedicalReportsScreenState extends State<MedicalReportsScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2)))),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // رأس التقرير
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(gradient: LinearGradient(colors: [(report['color'] as Color).withOpacity(0.1), (report['color'] as Color).withOpacity(0.05)]), borderRadius: BorderRadius.circular(14)),
-              child: Row(children: [Text(report['icon'], style: const TextStyle(fontSize: 40)), SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(report['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)), Text('${report['lab']} • ${report['date']}', style: const TextStyle(fontSize: 11, color: AppColors.grey))]))]),
+              child: Row(children: [Text(report['icon'], style: const TextStyle(fontSize: 40)), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(report['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)), Text('${report['lab']} • ${report['date']}', style: const TextStyle(fontSize: 11, color: AppColors.grey))]))]),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             // تفاصيل التقرير
             _detailRow('الطبيب المعالج', report['doctor'], Icons.person),
             _detailRow('المختبر', report['lab'], Icons.science),
@@ -189,18 +189,18 @@ class _MedicalReportsScreenState extends State<MedicalReportsScreen> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(children: [
                   Icon(report['status'] == 'طبيعي' ? Icons.check_circle : Icons.warning, color: report['status'] == 'طبيعي' ? AppColors.success : AppColors.warning, size: 20),
-                  SizedBox(width: 6),
+                  const SizedBox(width: 6),
                   Text('الحالة: ${report['status']}', style: TextStyle(fontWeight: FontWeight.bold, color: report['status'] == 'طبيعي' ? AppColors.success : AppColors.warning)),
                 ]),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(report['summary'], style: const TextStyle(fontSize: 13, height: 1.6, color: AppColors.darkGrey)),
               ]),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // أزرار
             Row(children: [
               Expanded(child: ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.download), label: const Text('تحميل PDF'), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 12)))),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(child: OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.share), label: const Text('مشاركة'), style: OutlinedButton.styleFrom(foregroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 12)))),
             ]),
           ]),
@@ -212,7 +212,7 @@ class _MedicalReportsScreenState extends State<MedicalReportsScreen> {
   Widget _detailRow(String label, String value, IconData icon) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
-      child: Row(children: [Icon(icon, size: 14, color: AppColors.grey), SizedBox(width: 8), Text('$label: ', style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12)), Text(value, style: const TextStyle(fontSize: 12, color: AppColors.darkGrey))]),
+      child: Row(children: [Icon(icon, size: 14, color: AppColors.grey), const SizedBox(width: 8), Text('$label: ', style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12)), Text(value, style: const TextStyle(fontSize: 12, color: AppColors.darkGrey))]),
     );
   }
 
@@ -251,7 +251,7 @@ class _MedicalReportsScreenState extends State<MedicalReportsScreen> {
           child: ListView.separated(
             scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 10),
             itemCount: ['الكل', 'تحليل دم', 'تحليل', 'أشعة', 'تخطيط', 'فحص'].length,
-            separatorBuilder: (_, __) => SizedBox(width: 4),
+            separatorBuilder: (_, __) => const SizedBox(width: 4),
             itemBuilder: (context, i) {
               final t = ['الكل', 'تحليل دم', 'تحليل', 'أشعة', 'تخطيط', 'فحص'][i];
               final selected = _selectedType == t;
@@ -276,13 +276,13 @@ class _MedicalReportsScreenState extends State<MedicalReportsScreen> {
                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
                   child: Row(children: [
                     Container(width: 48, height: 48, decoration: BoxDecoration(color: (r['color'] as Color).withOpacity(0.06), borderRadius: BorderRadius.circular(12)), child: Center(child: Text(r['icon'], style: const TextStyle(fontSize: 24)))),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text(r['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13), maxLines: 1, overflow: TextOverflow.ellipsis),
                       Text('${r['doctor']} • ${r['date']}', style: const TextStyle(fontSize: 9, color: AppColors.grey)),
                       Row(children: [
                         Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: (r['color'] as Color).withOpacity(0.08), borderRadius: BorderRadius.circular(4)), child: Text(r['type'], style: TextStyle(fontSize: 8, color: r['color']))),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(r['size'], style: const TextStyle(fontSize: 9, color: AppColors.grey)),
                       ]),
                     ])),
@@ -295,7 +295,7 @@ class _MedicalReportsScreenState extends State<MedicalReportsScreen> {
                         ),
                         child: Text(r['status'], style: TextStyle(fontSize: 9, color: r['status'] == 'طبيعي' ? AppColors.success : AppColors.warning, fontWeight: FontWeight.bold)),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       const Icon(Icons.arrow_back_ios, size: 12, color: AppColors.grey),
                     ]),
                   ]),

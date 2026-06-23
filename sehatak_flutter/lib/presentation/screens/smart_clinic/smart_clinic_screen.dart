@@ -107,7 +107,7 @@ class _SmartClinicScreenState extends State<SmartClinicScreen> {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               ),
             )),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             CircleAvatar(
               backgroundColor: AppColors.primary,
               child: IconButton(

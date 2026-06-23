@@ -100,17 +100,17 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
           child: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2)))),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(isEdit ? 'تعديل الملاحظة' : 'إضافة ملاحظة', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
 
               // اختيار أيقونة ولون
               Row(children: [
                 _emojiPicker(emoji, (e) => setModalState(() => emoji = e)),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 _colorPicker(noteColor, (c) => setModalState(() => noteColor = c)),
               ]),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               // العنوان
               TextField(
@@ -123,7 +123,7 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               // التصنيف
               DropdownButtonFormField<String>(
@@ -132,7 +132,7 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
                 items: ['أعراض', 'قياسات', 'مواعيد', 'أدوية', 'أخرى'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
                 onChanged: (v) => setModalState(() => category = v!),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               // المحتوى
               TextField(
@@ -146,12 +146,12 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // أزرار
               Row(children: [
                 Expanded(child: OutlinedButton(onPressed: () => Navigator.pop(context), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('إلغاء'))),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -183,7 +183,7 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
                   ),
                 ),
               ]),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ]),
           ),
         ),
@@ -248,7 +248,7 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
           height: 45,
           child: ListView.separated(
             scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            itemCount: _categories.length, separatorBuilder: (_, __) => SizedBox(width: 4),
+            itemCount: _categories.length, separatorBuilder: (_, __) => const SizedBox(width: 4),
             itemBuilder: (context, idx) {
               final c = _categories[idx];
               final selected = _filterCategory == c;
@@ -262,9 +262,9 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
           child: filtered.isEmpty
               ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   const Icon(Icons.note_add, size: 60, color: AppColors.grey),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   const Text('لا توجد ملاحظات', style: TextStyle(color: AppColors.grey, fontSize: 16)),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   ElevatedButton.icon(onPressed: _addNote, icon: const Icon(Icons.add), label: const Text('إضافة أول ملاحظة'), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary)),
                 ]))
               : ListView.builder(
@@ -280,7 +280,7 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Row(children: [
                           Container(width: 36, height: 36, decoration: BoxDecoration(color: (n['color'] as Color).withOpacity(0.1), borderRadius: BorderRadius.circular(8)), child: Center(child: Text(n['icon'], style: const TextStyle(fontSize: 18)))),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                             Row(children: [
                               Expanded(child: Text(n['title'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14))),
@@ -290,9 +290,9 @@ class _MedicalNotesScreenState extends State<MedicalNotesScreen> {
                           ])),
                           Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: (n['color'] as Color).withOpacity(0.1), borderRadius: BorderRadius.circular(4)), child: Text(n['category'], style: TextStyle(fontSize: 8, color: n['color']))),
                         ]),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(n['content'], style: const TextStyle(fontSize: 12, color: AppColors.darkGrey, height: 1.4)),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(children: [
                           IconButton(icon: Icon(Icons.push_pin, color: n['pinned'] ? AppColors.warning : AppColors.grey, size: 18), onPressed: () => _togglePin(originalIndex), tooltip: 'تثبيت', constraints: const BoxConstraints()),
                           IconButton(icon: const Icon(Icons.edit, size: 18, color: AppColors.info), onPressed: () => _editNote(originalIndex), tooltip: 'تعديل', constraints: const BoxConstraints()),

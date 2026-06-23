@@ -22,12 +22,12 @@ class _RateAppScreenState extends State<RateAppScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(14),
         child: Column(children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           const Icon(Icons.star, size: 70, color: AppColors.amber),
-          SizedBox(height: 16),
-          const Text('ما رأيك في منصة صحتك؟', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 16),
+          const Text('ما رأيك في تطبيق صحتك؟', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const Text('تقييمك يساعدنا في التحسين', style: TextStyle(color: AppColors.grey, fontSize: 13)),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // النجوم
           Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(5, (i) => GestureDetector(
@@ -35,24 +35,24 @@ class _RateAppScreenState extends State<RateAppScreen> {
             child: Icon(i < _rating ? Icons.star : Icons.star_border, color: AppColors.amber, size: 48),
           ))),
           if (_rating > 0) ...[
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Text(_ratingText, style: TextStyle(fontWeight: FontWeight.bold, color: _rating >= 4 ? AppColors.success : _rating >= 3 ? AppColors.warning : AppColors.error)),
           ],
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // هل توصي؟
           Text('هل توصي أصدقاءك بالتطبيق؟', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(children: [
             _recommendButton('نعم 👍', true),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             _recommendButton('لا 👎', false),
           ]),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           // وسوم
           Text('أضف وصفاً', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Wrap(spacing: 6, runSpacing: 6, children: _tags.map((t) => FilterChip(
             label: Text(t, style: const TextStyle(fontSize: 11)),
             selected: _selectedTags.contains(t),
@@ -60,7 +60,7 @@ class _RateAppScreenState extends State<RateAppScreen> {
             checkmarkColor: AppColors.primary,
             onSelected: (v) => setState(() => v ? _selectedTags.add(t) : _selectedTags.remove(t)),
           )).toList()),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
 
           // ملاحظات
           TextField(
@@ -74,7 +74,7 @@ class _RateAppScreenState extends State<RateAppScreen> {
               fillColor: AppColors.surfaceContainerLow.withOpacity(0.3),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('شكراً لتقييمك! 🤍'), backgroundColor: AppColors.success)); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('إرسال التقييم', style: TextStyle(fontSize: 16)))),
         ]),

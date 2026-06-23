@@ -131,20 +131,20 @@ class _HealthCommunityScreenState extends State<HealthCommunityScreen> {
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, left: 20, right: 20, top: 20),
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2)))),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           const Text('منشور جديد', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           DropdownButtonFormField<String>(
             value: 'استشارات',
             decoration: InputDecoration(labelText: 'التصنيف', border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
             items: ['استشارات', 'نصائح', 'رياضة', 'تغذية', 'نفسية', 'أطفال', 'أخرى'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
             onChanged: (_) {},
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           TextField(controller: _postController, maxLines: 4, textAlign: TextAlign.right, decoration: InputDecoration(hintText: 'اكتب منشورك هنا...', border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)))),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () { if (_postController.text.isNotEmpty) { setState(() => _posts.insert(0, {'user': 'أنت', 'avatar': '⭐', 'topic': 'جديد', 'content': _postController.text, 'replies': 0, 'likes': 0, 'time': 'الآن', 'category': 'استشارات', 'isLiked': false, 'isSaved': false})); _postController.clear(); Navigator.pop(context); ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم نشر منشورك!'), backgroundColor: AppColors.success)); } }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('نشر'))),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ]),
       ),
     );
@@ -178,7 +178,7 @@ class _HealthCommunityScreenState extends State<HealthCommunityScreen> {
             ),
             Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, -1))]), child: Row(children: [
               Expanded(child: TextField(controller: _commentController, textAlign: TextAlign.right, decoration: InputDecoration(hintText: 'اكتب تعليقاً...', filled: true, fillColor: AppColors.surfaceContainerLow, border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none), contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8)))),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               CircleAvatar(backgroundColor: AppColors.primary, child: IconButton(icon: const Icon(Icons.send, color: Colors.white, size: 16), onPressed: () { _commentController.clear(); })),
             ])),
           ]),
@@ -192,8 +192,8 @@ class _HealthCommunityScreenState extends State<HealthCommunityScreen> {
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         CircleAvatar(radius: 16, backgroundColor: AppColors.primary.withOpacity(0.1), child: Text(avatar, style: const TextStyle(fontSize: 16))),
-        SizedBox(width: 8),
-        Expanded(child: Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(12)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)), SizedBox(height: 2), Text(comment, style: const TextStyle(fontSize: 12)), SizedBox(height: 2), Text(time, style: const TextStyle(fontSize: 9, color: AppColors.grey))]))),
+        const SizedBox(width: 8),
+        Expanded(child: Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(12)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)), const SizedBox(height: 2), Text(comment, style: const TextStyle(fontSize: 12)), const SizedBox(height: 2), Text(time, style: const TextStyle(fontSize: 9, color: AppColors.grey))]))),
       ]),
     );
   }
@@ -214,7 +214,7 @@ class _HealthCommunityScreenState extends State<HealthCommunityScreen> {
           margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(gradient: LinearGradient(colors: [AppColors.teal, AppColors.primary]), borderRadius: BorderRadius.circular(16)),
-          child: Row(children: [const Icon(Icons.people, color: Colors.white, size: 36), SizedBox(width: 10), const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('مجتمع صحتك', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)), Text('انضم إلى 15,000+ عضو', style: TextStyle(color: Colors.white70, fontSize: 11))])), Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(12)), child: const Text('7 منشورات', style: TextStyle(color: Colors.white, fontSize: 10)))]),
+          child: Row(children: [const Icon(Icons.people, color: Colors.white, size: 36), const SizedBox(width: 10), const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('مجتمع صحتك', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)), Text('انضم إلى 15,000+ عضو', style: TextStyle(color: Colors.white70, fontSize: 11))])), Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(12)), child: const Text('7 منشورات', style: TextStyle(color: Colors.white, fontSize: 10)))]),
         ),
 
         // تصنيفات
@@ -223,7 +223,7 @@ class _HealthCommunityScreenState extends State<HealthCommunityScreen> {
           child: ListView.separated(
             scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             itemCount: ['الكل', 'استشارات', 'نصائح', 'رياضة', 'تغذية', 'نفسية', 'أطفال'].length,
-            separatorBuilder: (_, __) => SizedBox(width: 4),
+            separatorBuilder: (_, __) => const SizedBox(width: 4),
             itemBuilder: (context, i) {
               final cat = ['الكل', 'استشارات', 'نصائح', 'رياضة', 'تغذية', 'نفسية', 'أطفال'][i];
               final selected = _selectedCategory == cat;
@@ -248,11 +248,11 @@ class _HealthCommunityScreenState extends State<HealthCommunityScreen> {
                   // رأس المنشور
                   Row(children: [
                     CircleAvatar(radius: 18, backgroundColor: AppColors.primary.withOpacity(0.1), child: Text(p['avatar'], style: const TextStyle(fontSize: 18))),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Row(children: [
                         Text(p['user'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                        if (p['verified'] == true) ...[SizedBox(width: 4), const Icon(Icons.verified, color: AppColors.info, size: 16)],
+                        if (p['verified'] == true) ...[const SizedBox(width: 4), const Icon(Icons.verified, color: AppColors.info, size: 16)],
                       ]),
                       Text(p['time'], style: const TextStyle(fontSize: 9, color: AppColors.grey)),
                     ])),
@@ -262,22 +262,22 @@ class _HealthCommunityScreenState extends State<HealthCommunityScreen> {
                       onSelected: (v) { if (v == 'save') _toggleSave(idx); },
                     ),
                   ]),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
 
                   // المحتوى
                   Text(p['content'], style: const TextStyle(fontSize: 13, height: 1.5, color: AppColors.darkGrey)),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.06), borderRadius: BorderRadius.circular(8)), child: Text(p['topic'], style: const TextStyle(fontSize: 9, color: AppColors.primary))),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
                   // أزرار التفاعل
                   Row(children: [
-                    GestureDetector(onTap: () => _toggleLike(idx), child: Row(children: [Icon(p['isLiked'] ? Icons.favorite : Icons.favorite_border, color: p['isLiked'] ? AppColors.error : AppColors.grey, size: 18), SizedBox(width: 4), Text('${p['likes']}', style: TextStyle(fontSize: 11, color: p['isLiked'] ? AppColors.error : AppColors.grey))])),
-                    SizedBox(width: 16),
-                    GestureDetector(onTap: () => _showComments(p), child: Row(children: [const Icon(Icons.chat_bubble_outline, size: 18, color: AppColors.grey), SizedBox(width: 4), Text('${p['replies']}', style: const TextStyle(fontSize: 11, color: AppColors.grey))])),
+                    GestureDetector(onTap: () => _toggleLike(idx), child: Row(children: [Icon(p['isLiked'] ? Icons.favorite : Icons.favorite_border, color: p['isLiked'] ? AppColors.error : AppColors.grey, size: 18), const SizedBox(width: 4), Text('${p['likes']}', style: TextStyle(fontSize: 11, color: p['isLiked'] ? AppColors.error : AppColors.grey))])),
+                    const SizedBox(width: 16),
+                    GestureDetector(onTap: () => _showComments(p), child: Row(children: [const Icon(Icons.chat_bubble_outline, size: 18, color: AppColors.grey), const SizedBox(width: 4), Text('${p['replies']}', style: const TextStyle(fontSize: 11, color: AppColors.grey))])),
                     const Spacer(),
                     GestureDetector(onTap: () => _toggleSave(idx), child: Icon(p['isSaved'] ? Icons.bookmark : Icons.bookmark_border, color: p['isSaved'] ? AppColors.primary : AppColors.grey, size: 18)),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     const Icon(Icons.share, size: 18, color: AppColors.grey),
                   ]),
                 ]),

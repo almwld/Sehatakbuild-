@@ -28,21 +28,21 @@ class NearbyClinicsScreen extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Container(width: 50, height: 50, decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.06), borderRadius: BorderRadius.circular(12)), child: Center(child: Text(c['image'], style: const TextStyle(fontSize: 26)))),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(c['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                   Text(c['specialties'], style: const TextStyle(fontSize: 10, color: AppColors.grey)),
-                  Row(children: [const Icon(Icons.star, color: AppColors.amber, size: 14), Text(' ${c['rating']}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)), SizedBox(width: 8), const Icon(Icons.location_on, size: 14, color: AppColors.grey), Text(' ${c['distance']}', style: const TextStyle(fontSize: 11, color: AppColors.grey))]),
+                  Row(children: [const Icon(Icons.star, color: AppColors.amber, size: 14), Text(' ${c['rating']}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)), const SizedBox(width: 8), const Icon(Icons.location_on, size: 14, color: AppColors.grey), Text(' ${c['distance']}', style: const TextStyle(fontSize: 11, color: AppColors.grey))]),
                 ])),
                 Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                   Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: c['open'] ? AppColors.success.withOpacity(0.1) : AppColors.error.withOpacity(0.1), borderRadius: BorderRadius.circular(6)), child: Text(c['open'] ? 'مفتوح' : 'مغلق', style: TextStyle(fontSize: 9, color: c['open'] ? AppColors.success : AppColors.error, fontWeight: FontWeight.bold))),
                   Text(c['closes'], style: const TextStyle(fontSize: 9, color: AppColors.grey)),
                 ]),
               ]),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(children: [
                 Expanded(child: OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.call, size: 14), label: Text(c['phone']), style: OutlinedButton.styleFrom(foregroundColor: AppColors.success, padding: const EdgeInsets.symmetric(vertical: 8)))),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(child: ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.navigation, size: 14), label: const Text('توجيه'), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 8)))),
               ]),
             ]),

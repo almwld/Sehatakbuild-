@@ -28,31 +28,31 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
             decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.error, Color(0xFFC62828)]), borderRadius: BorderRadius.circular(16)),
             child: Column(children: [
               const Icon(Icons.favorite, color: Colors.white, size: 48),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               const Text('أقصى معدل لقلبك', style: TextStyle(color: Colors.white70, fontSize: 14)),
               Text('$_maxHR', style: const TextStyle(color: Colors.white, fontSize: 48, fontWeight: FontWeight.bold)),
               const Text('نبضة/دقيقة', style: TextStyle(color: Colors.white70)),
             ]),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           // نطاق التمرين
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
             child: Column(children: [
               const Text('نطاق التمرين المثالي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Row(children: [
                 _zoneCard('إحماء', 50, 60, AppColors.success),
                 _zoneCard('حرق دهون', 60, 70, AppColors.info),
                 _zoneCard('تحمل', 70, 80, AppColors.warning),
                 _zoneCard('أقصى مجهود', 80, 90, AppColors.error),
               ]),
-              SizedBox(height: 10),
-              Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.05), borderRadius: BorderRadius.circular(12)), child: Row(children: [const Icon(Icons.info, color: AppColors.primary), SizedBox(width: 8), Expanded(child: Text('معدل التمرين الموصى: $_targetMin - $_targetMax نبضة/دقيقة', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)))])),
+              const SizedBox(height: 10),
+              Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.05), borderRadius: BorderRadius.circular(12)), child: Row(children: [const Icon(Icons.info, color: AppColors.primary), const SizedBox(width: 8), Expanded(child: Text('معدل التمرين الموصى: $_targetMin - $_targetMax نبضة/دقيقة', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)))])),
             ]),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           // إعدادات
           _sliderSetting('العمر', _age.toDouble(), 1, 100, (v) => setState(() => _age = v.toInt())),
           _sliderSetting('معدل الراحة', _restingHR.toDouble(), 40, 100, (v) => setState(() => _restingHR = v.toInt())),
@@ -66,7 +66,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     final min = (_maxHR * minPercent / 100).round();
     final max = (_maxHR * maxPercent / 100).round();
     return Expanded(
-      child: Container(margin: const EdgeInsets.symmetric(horizontal: 2), padding: const EdgeInsets.all(6), decoration: BoxDecoration(color: color.withOpacity(0.08), borderRadius: BorderRadius.circular(8)), child: Column(children: [Text(label, style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: color)), SizedBox(height: 2), Text('$min-$max', style: TextStyle(fontSize: 10, color: color))])),
+      child: Container(margin: const EdgeInsets.symmetric(horizontal: 2), padding: const EdgeInsets.all(6), decoration: BoxDecoration(color: color.withOpacity(0.08), borderRadius: BorderRadius.circular(8)), child: Column(children: [Text(label, style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: color)), const SizedBox(height: 2), Text('$min-$max', style: TextStyle(fontSize: 10, color: color))])),
     );
   }
 

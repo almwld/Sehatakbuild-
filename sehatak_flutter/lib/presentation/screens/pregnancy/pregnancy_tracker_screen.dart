@@ -41,13 +41,13 @@ class _PregnancyTrackerScreenState extends State<PregnancyTrackerScreen> {
               Column(children: [const Text('الأسبوع', style: TextStyle(color: Colors.white70, fontSize: 12)), Text('$_week', style: const TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold)), const Text('من 40', style: TextStyle(color: Colors.white70, fontSize: 12))]),
               Column(children: [const Text('متبقي', style: TextStyle(color: Colors.white70, fontSize: 12)), Text('$daysLeft', style: const TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold)), const Text('يوم', style: TextStyle(color: Colors.white70, fontSize: 12))]),
             ]),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             LinearProgressIndicator(value: _week / 40, backgroundColor: Colors.white24, color: Colors.white, minHeight: 6, borderRadius: BorderRadius.circular(3)),
             Text('الموعد: ${_dueDate.day}/${_dueDate.month}/${_dueDate.year}', style: const TextStyle(color: Colors.white70, fontSize: 11)),
           ]),
         ),
-        SizedBox(height: 14),
-        Container(padding: const EdgeInsets.all(14), decoration: BoxDecoration(color: Colors.pink.shade50, borderRadius: BorderRadius.circular(14)), child: Row(children: [Text(tip['icon']!, style: const TextStyle(fontSize: 44)), SizedBox(width: 10), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(tip['title']!, style: const TextStyle(fontWeight: FontWeight.bold)), Text('طفلك الآن ${tip['baby']}', style: const TextStyle(color: AppColors.darkGrey)), SizedBox(height: 4), Text('💡 ${tip['tip']}', style: const TextStyle(fontSize: 12))]))])),
+        const SizedBox(height: 14),
+        Container(padding: const EdgeInsets.all(14), decoration: BoxDecoration(color: Colors.pink.shade50, borderRadius: BorderRadius.circular(14)), child: Row(children: [Text(tip['icon']!, style: const TextStyle(fontSize: 44)), const SizedBox(width: 10), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(tip['title']!, style: const TextStyle(fontWeight: FontWeight.bold)), Text('طفلك الآن ${tip['baby']}', style: const TextStyle(color: AppColors.darkGrey)), const SizedBox(height: 4), Text('💡 ${tip['tip']}', style: const TextStyle(fontSize: 12))]))])),
       ])),
     );
   }

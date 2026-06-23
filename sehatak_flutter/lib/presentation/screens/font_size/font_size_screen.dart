@@ -11,7 +11,7 @@ class _FontSizeScreenState extends State<FontSizeScreen> {
   double _fontScale = 1.0;
   String _fontSize = 'متوسط';
 
-  final String _previewText = 'مرحباً بك في منصة صحتك\nهذا النص يوضح حجم الخط الحالي\nيمكنك تعديل حجم الخط من هنا';
+  final String _previewText = 'مرحباً بك في تطبيق صحتك\nهذا النص يوضح حجم الخط الحالي\nيمكنك تعديل حجم الخط من هنا';
 
   void _updateFontSize(double scale) {
     setState(() {
@@ -43,8 +43,8 @@ class _FontSizeScreenState extends State<FontSizeScreen> {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)]),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(children: [Container(width: 4, height: 20, decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(2))), SizedBox(width: 8), const Text('معاينة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))]),
-              SizedBox(height: 16),
+              Row(children: [Container(width: 4, height: 20, decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(2))), const SizedBox(width: 8), const Text('معاينة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))]),
+              const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(color: AppColors.surfaceContainerLow.withOpacity(0.3), borderRadius: BorderRadius.circular(12)),
@@ -55,7 +55,7 @@ class _FontSizeScreenState extends State<FontSizeScreen> {
                   style: TextStyle(fontSize: 14, color: AppColors.darkGrey, height: 1.8),
                 ),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
@@ -66,7 +66,7 @@ class _FontSizeScreenState extends State<FontSizeScreen> {
               ),
             ]),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // شريط التحكم
           Container(
@@ -74,7 +74,7 @@ class _FontSizeScreenState extends State<FontSizeScreen> {
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)]),
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: const [Text('A', style: TextStyle(fontSize: 14)), Text('A', style: TextStyle(fontSize: 24))]),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Slider(
                 value: _fontScale,
                 min: 0.8,
@@ -84,7 +84,7 @@ class _FontSizeScreenState extends State<FontSizeScreen> {
                 label: _fontSize,
                 onChanged: _updateFontSize,
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: const [
                 Text('صغير', style: TextStyle(fontSize: 10, color: AppColors.grey)),
                 Text('متوسط', style: TextStyle(fontSize: 10, color: AppColors.grey)),
@@ -92,20 +92,20 @@ class _FontSizeScreenState extends State<FontSizeScreen> {
               ]),
             ]),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // أمثلة
           Text('أمثلة على أحجام مختلفة', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _exampleCard('عنوان رئيسي', 20 * _fontScale, FontWeight.bold),
           _exampleCard('عنوان فرعي', 16 * _fontScale, FontWeight.w600),
           _exampleCard('نص عادي', 14 * _fontScale, FontWeight.normal),
           _exampleCard('نص صغير', 11 * _fontScale, FontWeight.normal),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // زر الحفظ
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () { Navigator.pop(context); ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم حفظ حجم الخط'), backgroundColor: AppColors.success)); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('حفظ', style: TextStyle(fontSize: 16)))),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () { setState(() => _updateFontSize(1.0)); }, style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('إعادة للافتراضي'))),
         ]),
       ),

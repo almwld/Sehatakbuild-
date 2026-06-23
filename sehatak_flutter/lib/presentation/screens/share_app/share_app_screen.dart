@@ -11,17 +11,17 @@ class ShareAppScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(14),
         child: Column(children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           const Icon(Icons.share, size: 80, color: AppColors.primary),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           const Text('شارك صحتك مع أحبابك', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           const Text('ساعد الآخرين في العناية بصحتهم', style: TextStyle(color: AppColors.grey, fontSize: 13)),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
 
           // طرق المشاركة
           Text('اختر طريقة المشاركة', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           GridView.count(crossAxisCount: 3, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 0.95,
             children: [
               _shareOption('واتساب', Icons.chat, const Color(0xFF25D366)),
@@ -35,7 +35,7 @@ class ShareAppScreen extends StatelessWidget {
               _shareOption('QR Code', Icons.qr_code, AppColors.dark),
             ],
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // كود QR
           Container(
@@ -43,17 +43,17 @@ class ShareAppScreen extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)]),
             child: Column(children: [
               const Text('رمز المشاركة السريع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
               Container(
                 width: 160, height: 160,
                 decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.05), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.primary.withOpacity(0.2))),
                 child: const Center(child: Icon(Icons.qr_code_2, size: 120, color: AppColors.primary)),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               const Text('امسح للتحميل', style: TextStyle(fontSize: 11, color: AppColors.grey)),
             ]),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ]),
       ),
     );
@@ -64,7 +64,7 @@ class ShareAppScreen extends StatelessWidget {
       onTap: () {},
       child: Column(children: [
         Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: color.withOpacity(0.08), shape: BoxShape.circle), child: Icon(icon, color: color, size: 28)),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500)),
       ]),
     );

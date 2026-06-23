@@ -122,7 +122,7 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(14),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Center(
           child: Container(
             width: 100, height: 100,
@@ -130,11 +130,11 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
             child: const Icon(Icons.psychology, color: Colors.white, size: 50),
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         const Center(child: Text('مقياس التوتر والضغط النفسي', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         const Center(child: Text('DASS-21 المعدل', style: TextStyle(fontSize: 12, color: AppColors.grey))),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
 
         // معلومات عن الاختبار
         Container(
@@ -149,16 +149,16 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
             Text('• هذا اختبار مساعد فقط وليس تشخيصاً طبياً', style: TextStyle(fontSize: 13)),
           ]),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
 
         // مستويات التوتر
         Text('مستويات النتائج', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         _levelInfo('منخفض (0-20)', '😊', 'حالتك النفسية جيدة. استمر في عاداتك الصحية.', AppColors.success),
         _levelInfo('متوسط (21-50)', '😐', 'لديك بعض التوتر. جرب تقنيات الاسترخاء.', AppColors.warning),
         _levelInfo('مرتفع (51-80)', '😟', 'مستوى توتر مرتفع. ننصح باستشارة مختص.', AppColors.error),
         _levelInfo('شديد (81+)', '😰', 'توتر شديد. يرجى التواصل مع أخصائي نفسي.', const Color(0xFFB71C1C)),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
 
         SizedBox(width: double.infinity, child: ElevatedButton.icon(
           onPressed: _startTest,
@@ -187,10 +187,10 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Container(width: 28, height: 28, decoration: BoxDecoration(color: _answers[idx] >= 0 ? AppColors.primary : AppColors.grey.withOpacity(0.2), shape: BoxShape.circle), child: Center(child: Text('${idx + 1}', style: TextStyle(fontSize: 11, color: _answers[idx] >= 0 ? Colors.white : AppColors.grey)))),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(child: Text(q['q'], style: const TextStyle(fontSize: 14, height: 1.4))),
                 ]),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   _answerButton(idx, 0, 'أبداً', '0'),
                   _answerButton(idx, 1, 'أحياناً', '1'),
@@ -219,21 +219,21 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(14),
       child: Column(children: [
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         // بطاقة النتيجة
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(gradient: LinearGradient(colors: [_stressColor.withOpacity(0.8), _stressColor]), borderRadius: BorderRadius.circular(20)),
           child: Column(children: [
             Text(_stressEmoji, style: const TextStyle(fontSize: 64)),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text('مستوى التوتر', style: TextStyle(color: Colors.white70, fontSize: 16)),
             Text(_stressLevel, style: const TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text('$_totalScore نقطة', style: const TextStyle(color: Colors.white70, fontSize: 14)),
           ]),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
 
         // مقياس بصري
         Container(
@@ -247,33 +247,33 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
             ]),
           ]),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
 
         // شرح النتيجة
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(color: _stressColor.withOpacity(0.05), borderRadius: BorderRadius.circular(14), border: Border.all(color: _stressColor.withOpacity(0.2))),
-          child: Row(children: [Icon(Icons.info, color: _stressColor), SizedBox(width: 8), Expanded(child: Text(_getResultDescription(), style: const TextStyle(fontSize: 13, height: 1.5, color: AppColors.darkGrey)))]),
+          child: Row(children: [Icon(Icons.info, color: _stressColor), const SizedBox(width: 8), Expanded(child: Text(_getResultDescription(), style: const TextStyle(fontSize: 13, height: 1.5, color: AppColors.darkGrey)))]),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
 
         // توصيات
         Text('توصيات لك', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: _recommendations.map((r) => Padding(padding: const EdgeInsets.only(bottom: 6), child: Text(r, style: const TextStyle(fontSize: 13, height: 1.4)))).toList()),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
 
         // أزرار
         Row(children: [
           Expanded(child: OutlinedButton(onPressed: _startTest, style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('إعادة الاختبار'))),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(child: ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.psychology), label: const Text('استشر مختص'), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)))),
         ]),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ]),
     );
   }
@@ -305,7 +305,7 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
       decoration: BoxDecoration(color: color.withOpacity(0.05), borderRadius: BorderRadius.circular(10)),
       child: Row(children: [
         Text(emoji, style: const TextStyle(fontSize: 24)),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: color)), Text(desc, style: const TextStyle(fontSize: 10, color: AppColors.grey))])),
       ]),
     );
@@ -315,7 +315,7 @@ class _StressMeterScreenState extends State<StressMeterScreen> {
     switch (_stressLevel) {
       case 'منخفض': return 'نتيجتك تشير إلى مستوى توتر منخفض. أنت تتعامل مع الضغوط بشكل جيد. حافظ على نمط حياتك الصحي.';
       case 'متوسط': return 'نتيجتك تشير إلى مستوى توتر متوسط. قد تحتاج إلى بعض تقنيات الاسترخاء وإدارة الوقت.';
-      case 'مرتفع': return 'نتيجتك تشير إلى مستوى توتر مرتفع. ننصحك بالتحدث مع مختص نفسي ومنصة تقنيات إدارة التوتر.';
+      case 'مرتفع': return 'نتيجتك تشير إلى مستوى توتر مرتفع. ننصحك بالتحدث مع مختص نفسي وتطبيق تقنيات إدارة التوتر.';
       case 'شديد': return 'نتيجتك تشير إلى مستوى توتر شديد. ننصحك بشدة بالتواصل مع أخصائي نفسي في أقرب وقت. أنت لست وحدك.';
       default: return '';
     }

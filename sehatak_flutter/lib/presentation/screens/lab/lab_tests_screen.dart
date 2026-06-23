@@ -44,13 +44,13 @@ class LabTestsScreen extends StatelessWidget {
                   decoration: BoxDecoration(color: AppColors.info.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
                   child: const Icon(Icons.science, color: AppColors.info),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(test['name'] as String, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text('${test['category']} - ${test['duration']}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.grey)),
                     ],
                   ),
@@ -59,7 +59,7 @@ class LabTestsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text('${test['price']} ${AppStrings.currencyYER}', style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ElevatedButton(
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TestBookingScreen(testId: 't$index'))),
                       style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), minimumSize: Size.zero),

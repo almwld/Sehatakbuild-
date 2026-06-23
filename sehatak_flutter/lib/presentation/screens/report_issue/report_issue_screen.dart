@@ -25,11 +25,11 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
             decoration: BoxDecoration(color: AppColors.error.withOpacity(0.05), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.error.withOpacity(0.2))),
             child: const Row(children: [Icon(Icons.bug_report, color: AppColors.error, size: 28), SizedBox(width: 10), Expanded(child: Text('نأسف للمشكلة! ساعدنا في حلها بإرسال التفاصيل', style: TextStyle(fontSize: 12, color: AppColors.darkGrey)))]),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           // نوع المشكلة
           Text('نوع المشكلة', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Wrap(spacing: 6, children: ['مشكلة تقنية', 'خطأ في البيانات', 'مشكلة في الدفع', 'اقتراح تحسين', 'أخرى'].map((t) => ChoiceChip(
             label: Text(t, style: const TextStyle(fontSize: 11)),
             selected: _issueType == t,
@@ -37,21 +37,21 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
             labelStyle: TextStyle(color: _issueType == t ? Colors.white : AppColors.darkGrey),
             onSelected: (_) => setState(() => _issueType = t),
           )).toList()),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
 
           // الأولوية
           Text('الأولوية', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(children: [
             _priorityChip('منخفض', Colors.green),
             _priorityChip('متوسط', Colors.orange),
             _priorityChip('عاجل', AppColors.error),
           ]),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
 
           // الوصف
           Text('وصف المشكلة', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           TextField(
             controller: _descController,
             maxLines: 5,
@@ -63,7 +63,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               fillColor: AppColors.surfaceContainerLow.withOpacity(0.3),
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
 
           // لقطة شاشة
           SwitchListTile(
@@ -74,7 +74,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
             secondary: const Icon(Icons.screenshot, color: AppColors.primary),
             onChanged: (v) => setState(() => _includeScreenshot = v),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           SizedBox(width: double.infinity, child: ElevatedButton.icon(onPressed: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم إرسال البلاغ. سنراجعه ونتواصل معك.'), backgroundColor: AppColors.success)); }, icon: const Icon(Icons.send), label: const Text('إرسال البلاغ'), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)))),
         ]),

@@ -42,7 +42,7 @@ class _LabsListScreenState extends State<LabsListScreen> {
           height: 42,
           child: ListView.separated(
             scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            itemCount: _categories.length, separatorBuilder: (_, __) => SizedBox(width: 4),
+            itemCount: _categories.length, separatorBuilder: (_, __) => const SizedBox(width: 4),
             itemBuilder: (context, index) {
               final c = _categories[index];
               final selected = _selectedCategory == c;
@@ -55,7 +55,7 @@ class _LabsListScreenState extends State<LabsListScreen> {
           height: 42,
           child: ListView.separated(
             scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            itemCount: _cities.length, separatorBuilder: (_, __) => SizedBox(width: 4),
+            itemCount: _cities.length, separatorBuilder: (_, __) => const SizedBox(width: 4),
             itemBuilder: (context, index) {
               final c = _cities[index];
               final selected = _selectedCity == c;
@@ -83,17 +83,17 @@ class _LabsListScreenState extends State<LabsListScreen> {
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
       child: Row(children: [
         Container(width: 50, height: 50, decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.06), borderRadius: BorderRadius.circular(12)), child: Center(child: Text(lab['image'], style: const TextStyle(fontSize: 26)))),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             Text(lab['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-            if (lab['accredited']) ...[SizedBox(width: 4), const Icon(Icons.verified, color: AppColors.info, size: 16)],
+            if (lab['accredited']) ...[const SizedBox(width: 4), const Icon(Icons.verified, color: AppColors.info, size: 16)],
           ]),
           Text(lab['city'], style: const TextStyle(fontSize: 10, color: AppColors.grey)),
           Text(lab['category'], style: TextStyle(fontSize: 10, color: AppColors.primary)),
           Row(children: [
             const Icon(Icons.star, color: AppColors.amber, size: 14), Text(' ${lab['rating']}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-            SizedBox(width: 8), const Icon(Icons.science, size: 14, color: AppColors.grey), Text(' ${lab['tests']} فحص', style: const TextStyle(fontSize: 10, color: AppColors.grey)),
+            const SizedBox(width: 8), const Icon(Icons.science, size: 14, color: AppColors.grey), Text(' ${lab['tests']} فحص', style: const TextStyle(fontSize: 10, color: AppColors.grey)),
           ]),
           Row(children: [
             if (lab['homeService']) Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: AppColors.success.withOpacity(0.1), borderRadius: BorderRadius.circular(4)), child: const Text('خدمة منزلية', style: TextStyle(fontSize: 8, color: AppColors.success))),

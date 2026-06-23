@@ -1,37 +1,63 @@
-import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'firebase_service.dart';
 
+/// خدمة API المعدلة للعمل مع Firebase Firestore
 class ApiService {
-  static const String baseUrl = 'https://hi-g26z.onrender.com';
-  static final Dio _dio = Dio(BaseOptions(baseUrl: baseUrl, connectTimeout: const Duration(seconds: 15)));
-  static String? _token;
+  static final FirebaseService _fb = FirebaseService();
 
-  static Future<void> init() async {
-    final prefs = await SharedPreferences.getInstance();
-    _token = prefs.getString('token');
-    if (_token != null) _dio.options.headers['Authorization'] = 'Bearer $_token';
+  // ========== AUTH ==========
+  static Future<Map<String, dynamic>> register({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String password,
+  }) async {
+    // يتم التعامل معها عبر AuthBloc مباشرة
+    return {'success': true};
   }
 
-  static bool get isLoggedIn => _token != null;
-
-  static Future<Map<String, dynamic>> sendOTP(String phone) async {
-    final res = await _dio.post('/api/otp/send', data: {'phone': phone});
-    return res.data;
+  static Future<Map<String, dynamic>> login({
+    required String email,
+    required String password,
+  }) async {
+    // يتم التعامل معها عبر AuthBloc مباشرة
+    return {'success': true};
   }
 
-  static Future<Map<String, dynamic>> login(String phone, String otp) async {
-    final res = await _dio.post('/api/auth/login', data: {'phone': phone, 'otp': otp});
-    if (res.data['success'] == true) {
-      _token = res.data['token'];
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', _token!);
-    }
-    return res.data;
+  static Future<Map<String, dynamic>> getProfile() async {
+    final uid = _fb.currentUser?.uid;
+    if (uid == null) return {'success': false, 'message': 'غير مسجل'};
+    final doc = await _fb.userDoc(uid).get();
+    return {'success': true, 'data': doc.data()};
   }
 
-  static Future<void> logout() async {
-    _token = null;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+  // ========== DOCTORS ==========
+  static Future<List<Map<String, dynamic>>> getDoctors({String? specialty}) async {
+    Query query = _fb.doctorsCol.where('isAvailable', isEqualTo: true);
+    if (specialty != null) query = query.where('specialization', isEqualTo: specialty);
+    query = query.orderBy('rating', descending: true);
+    final snapshot = await query.get();
+    return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+  }
+
+  // ========== ORDERS ==========
+  static Future<Map<String, dynamic>> placeOrder({
+    required Map<String, dynamic> details,
+  }) async {
+    final uid = _fb.currentUser?.uid;
+    if (uid == null) return {'success': false};
+    await _fb.ordersCol.add({...details, 'patientId': uid, 'createdAt': FieldValue.serverTimestamp()});
+    return {'success': true};
+  }
+
+  // ========== NOTIFICATIONS ==========
+  static Future<List<Map<String, dynamic>>> getNotifications() async {
+    final uid = _fb.currentUser?.uid;
+    if (uid == null) return [];
+    final snapshot = await _fb.notificationsCol
+        .where('userId', isEqualTo: uid)
+        .orderBy('createdAt', descending: true)
+        .get();
+    return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
   }
 }

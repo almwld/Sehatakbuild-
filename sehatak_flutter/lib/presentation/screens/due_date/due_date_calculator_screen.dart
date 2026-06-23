@@ -34,9 +34,9 @@ class _DueDateCalculatorScreenState extends State<DueDateCalculatorScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.pink.shade300, Colors.purple.shade400]), borderRadius: BorderRadius.circular(16)),
-            child: Column(children: [const Icon(Icons.cake, color: Colors.white, size: 40), SizedBox(height: 8), const Text('حاسبة موعد الولادة', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)), const Text('أدخلي تاريخ آخر دورة شهرية', style: TextStyle(color: Colors.white70, fontSize: 12))]),
+            child: Column(children: [const Icon(Icons.cake, color: Colors.white, size: 40), const SizedBox(height: 8), const Text('حاسبة موعد الولادة', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)), const Text('أدخلي تاريخ آخر دورة شهرية', style: TextStyle(color: Colors.white70, fontSize: 12))]),
           ),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           ListTile(
             title: const Text('تاريخ آخر دورة'),
             subtitle: Text(_lastPeriod != null ? '${_lastPeriod!.day}/${_lastPeriod!.month}/${_lastPeriod!.year}' : 'اضغطي للاختيار'),
@@ -47,22 +47,22 @@ class _DueDateCalculatorScreenState extends State<DueDateCalculatorScreen> {
             },
           ),
           if (_dueDate != null) ...[
-            SizedBox(height: 18),
+            const SizedBox(height: 18),
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.05), borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.primary.withOpacity(0.2))),
               child: Column(children: [
                 const Text('🎉 الموعد المتوقع', style: TextStyle(color: AppColors.grey, fontSize: 14)),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 Text('${_dueDate!.day}/${_dueDate!.month}/${_dueDate!.year}', style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppColors.primary)),
               ]),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             Row(children: [
               _infoCard('عمر الحمل', '$_weeks أسبوع و $_days يوم', Icons.pregnant_woman, Colors.pink),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _infoCard('الثلث', _trimester, Icons.baby_changing_station, AppColors.purple),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _infoCard('متبقي', '${_dueDate!.difference(DateTime.now()).inDays} يوم', Icons.hourglass_bottom, AppColors.info),
             ]),
           ],
@@ -73,7 +73,7 @@ class _DueDateCalculatorScreenState extends State<DueDateCalculatorScreen> {
 
   Widget _infoCard(String label, String value, IconData icon, Color color) {
     return Expanded(
-      child: Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: color.withOpacity(0.06), borderRadius: BorderRadius.circular(12)), child: Column(children: [Icon(icon, color: color, size: 22), SizedBox(height: 4), Text(value, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: color)), Text(label, style: const TextStyle(fontSize: 9, color: AppColors.grey))])),
+      child: Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: color.withOpacity(0.06), borderRadius: BorderRadius.circular(12)), child: Column(children: [Icon(icon, color: color, size: 22), const SizedBox(height: 4), Text(value, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: color)), Text(label, style: const TextStyle(fontSize: 9, color: AppColors.grey))])),
     );
   }
 }

@@ -50,7 +50,7 @@ class PharmaciesListScreen extends StatelessWidget {
                     ),
                     child: const Icon(Icons.local_pharmacy, color: AppColors.primary, size: 32),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,18 +59,18 @@ class PharmaciesListScreen extends StatelessWidget {
                           pharmacy['name'] as String,
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           pharmacy['address'] as String,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.grey),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
                             Icon(Icons.star, color: AppColors.amber, size: 16),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text('${pharmacy['rating']}'),
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(

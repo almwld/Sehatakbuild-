@@ -31,7 +31,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       body: ListView.separated(
         padding: const EdgeInsets.all(12),
         itemCount: _notifications.length,
-        separatorBuilder: (_, __) => SizedBox(height: 4),
+        separatorBuilder: (_, __) => const SizedBox(height: 4),
         itemBuilder: (context, index) {
           final n = _notifications[index];
           return Container(
@@ -43,15 +43,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             ),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(padding: const EdgeInsets.all(9), decoration: BoxDecoration(color: (n['color'] as Color).withOpacity(0.08), shape: BoxShape.circle), child: Icon(n['icon'], color: n['color'], size: 18)),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(children: [
                   if (!n['read']) Container(width: 8, height: 8, decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle)),
-                  if (!n['read']) SizedBox(width: 6),
+                  if (!n['read']) const SizedBox(width: 6),
                   Expanded(child: Text(n['title'], style: TextStyle(fontWeight: n['read'] ? FontWeight.normal : FontWeight.bold, fontSize: 14))),
                   Text(n['time'], style: const TextStyle(fontSize: 9, color: AppColors.grey)),
                 ]),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(n['message'], style: const TextStyle(fontSize: 12, color: AppColors.darkGrey, height: 1.3)),
               ])),
               PopupMenuButton(icon: const Icon(Icons.more_vert, size: 16, color: AppColors.grey), itemBuilder: (_) => [const PopupMenuItem(value: 'mark', child: Text('تحديد كمقروء')), const PopupMenuItem(value: 'delete', child: Text('حذف', style: TextStyle(color: AppColors.error)))], onSelected: (v) { if (v == 'mark') setState(() => n['read'] = true); if (v == 'delete') setState(() => _notifications.removeAt(index)); }),

@@ -23,14 +23,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             _contactInfoCard('📧', 'البريد', 'info@sehatak.com', AppColors.primary),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             _contactInfoCard('📱', 'الهاتف', '+967 777 123 456', AppColors.success),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             _contactInfoCard('🕐', 'الدوام', '24/7', AppColors.info),
           ]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text('أرسل رسالة', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -57,16 +57,16 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text('أو تواصل عبر', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             _socialButton(Icons.chat, 'واتساب', const Color(0xFF25D366)),
             _socialButton(Icons.telegram, 'تليجرام', const Color(0xFF0088cc)),
             _socialButton(Icons.facebook, 'فيسبوك', const Color(0xFF1877F2)),
             _socialButton(Icons.alternate_email, 'تويتر', const Color(0xFF1DA1F2)),
           ]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم إرسال رسالتك. سنرد عليك قريباً.'), backgroundColor: AppColors.success)); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('إرسال الرسالة', style: TextStyle(fontSize: 16)))),
         ]),
       ),
@@ -74,7 +74,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   }
 
   Widget _contactInfoCard(String emoji, String label, String value, Color color) {
-    return Expanded(child: Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: color.withOpacity(0.05), borderRadius: BorderRadius.circular(12)), child: Column(children: [Text(emoji, style: const TextStyle(fontSize: 24)), SizedBox(height: 4), Text(value, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: color)), Text(label, style: const TextStyle(fontSize: 9, color: AppColors.grey))])));
+    return Expanded(child: Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: color.withOpacity(0.05), borderRadius: BorderRadius.circular(12)), child: Column(children: [Text(emoji, style: const TextStyle(fontSize: 24)), const SizedBox(height: 4), Text(value, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: color)), Text(label, style: const TextStyle(fontSize: 9, color: AppColors.grey))])));
   }
 
   Widget _textField(String label, IconData icon, TextEditingController controller, [TextInputType? keyboardType]) {
@@ -95,7 +95,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   Widget _socialButton(IconData icon, String label, Color color) {
     return GestureDetector(
       onTap: () {},
-      child: Column(children: [Container(width: 50, height: 50, decoration: BoxDecoration(color: color.withOpacity(0.1), shape: BoxShape.circle), child: Icon(icon, color: color, size: 24)), SizedBox(height: 4), Text(label, style: const TextStyle(fontSize: 10))]),
+      child: Column(children: [Container(width: 50, height: 50, decoration: BoxDecoration(color: color.withOpacity(0.1), shape: BoxShape.circle), child: Icon(icon, color: color, size: 24)), const SizedBox(height: 4), Text(label, style: const TextStyle(fontSize: 10))]),
     );
   }
 }

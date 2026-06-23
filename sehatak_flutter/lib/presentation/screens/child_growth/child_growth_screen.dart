@@ -19,15 +19,15 @@ class ChildGrowthScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('نمو الطفل', style: TextStyle(fontWeight: FontWeight.bold))),
       body: SingleChildScrollView(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.pink, AppColors.purple]), borderRadius: BorderRadius.circular(16)), child: const Row(children: [Icon(Icons.child_care, color: Colors.white, size: 40), SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('مراحل نمو طفلك', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)), Text('تابع تطور طفلك خطوة بخطوة', style: TextStyle(color: Colors.white70, fontSize: 12))]))])),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ..._stages.map((s) => Container(
           margin: const EdgeInsets.only(bottom: 8), padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
           child: Row(children: [
-            Text(s['icon'], style: const TextStyle(fontSize: 32)), SizedBox(width: 8),
+            Text(s['icon'], style: const TextStyle(fontSize: 32)), const SizedBox(width: 8),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(s['age'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-              Row(children: [_chip('🏃 ${s['motor']}', s['color']), SizedBox(width: 4), _chip('👥 ${s['social']}', s['color']), SizedBox(width: 4), _chip('🗣️ ${s['language']}', s['color'])]),
+              Row(children: [_chip('🏃 ${s['motor']}', s['color']), const SizedBox(width: 4), _chip('👥 ${s['social']}', s['color']), const SizedBox(width: 4), _chip('🗣️ ${s['language']}', s['color'])]),
             ])),
           ]),
         )),

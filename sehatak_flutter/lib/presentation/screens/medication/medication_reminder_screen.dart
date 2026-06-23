@@ -30,9 +30,9 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
           decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]), borderRadius: BorderRadius.circular(16)),
           child: Column(children: [
             const Text('جرعات اليوم', style: TextStyle(color: Colors.white70, fontSize: 14)),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text('$_takenToday/$_totalToday', style: const TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             LinearProgressIndicator(value: _takenToday / _totalToday, backgroundColor: Colors.white24, color: Colors.white, minHeight: 6, borderRadius: BorderRadius.circular(3)),
           ]),
         ),
@@ -49,7 +49,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
                     Container(width: 44, height: 44, decoration: BoxDecoration(color: (m['color'] as Color).withOpacity(0.08), borderRadius: BorderRadius.circular(10)), child: Center(child: Text(m['icon'], style: const TextStyle(fontSize: 22)))),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text(m['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                       Text('${m['dose']} • ${m['frequency']}', style: const TextStyle(fontSize: 10, color: AppColors.grey)),
@@ -57,10 +57,10 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                     ])),
                     Checkbox(value: m['taken'], activeColor: AppColors.success, onChanged: (v) => setState(() => m['taken'] = v)),
                   ]),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(children: [
                     Text('متبقي: ${m['remaining']}/${m['total']}', style: const TextStyle(fontSize: 10, color: AppColors.grey)),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Expanded(child: LinearProgressIndicator(value: (m['remaining'] as int) / (m['total'] as int), backgroundColor: AppColors.surfaceContainerLow, color: (m['remaining'] as int) < 5 ? AppColors.error : AppColors.success, minHeight: 3, borderRadius: BorderRadius.circular(2))),
                   ]),
                 ]),

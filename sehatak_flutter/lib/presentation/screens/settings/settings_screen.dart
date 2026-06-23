@@ -42,7 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]), borderRadius: BorderRadius.circular(16)),
             child: Row(children: [
               const CircleAvatar(radius: 32, backgroundColor: Colors.white24, child: Text('أح', style: TextStyle(fontSize: 24, color: Colors.white))),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text('أحمد محمد', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                 Text('ahmed@email.com', style: TextStyle(color: Colors.white70, fontSize: 11)),
@@ -51,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               IconButton(icon: const Icon(Icons.edit, color: Colors.white), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const EditProfileScreen()))),
             ]),
           ),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========== الحساب ==========
           _sectionTitle('الحساب'),
@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _menuItem(Icons.security, 'المصادقة الثنائية', 'تعزيز أمان حسابك', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TwoFactorAuthScreen()))),
           _menuItem(Icons.fingerprint, 'بصمة الإصبع', 'تسجيل الدخول بالبصمة', switchValue: _biometric, onSwitch: (v) => setState(() => _biometric = v)),
           _menuItem(Icons.delete_outline, 'حذف الحساب', 'حذف نهائي للبيانات', onTap: () {}, isDanger: true),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========== التفضيلات ==========
           _sectionTitle('التفضيلات'),
@@ -82,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _menuItem(Icons.language, 'اللغة', _language, onTap: () => _showLanguagePicker()),
           _menuItem(Icons.format_size, 'حجم الخط', 'متوسط', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FontSizeScreen()))),
           _menuItem(Icons.color_lens, 'ثيم التطبيق', 'أخضر (افتراضي)', onTap: () {}),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========== الخصوصية والأمان ==========
           _sectionTitle('الخصوصية والأمان'),
@@ -90,7 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _menuItem(Icons.description_outlined, 'الشروط والأحكام', 'شروط استخدام التطبيق', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TermsScreen()))),
           _menuItem(Icons.admin_panel_settings, 'الأذونات', 'إدارة أذونات التطبيق', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PermissionsScreen()))),
           _menuItem(Icons.download_done, 'تحميل بياناتي', 'تصدير جميع بياناتك', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DownloadDataScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========== الدعم والمساعدة ==========
           _sectionTitle('الدعم والمساعدة'),
@@ -98,13 +98,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _menuItem(Icons.headset_mic, 'تواصل معنا', 'راسل فريق الدعم', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ContactUsScreen()))),
           _menuItem(Icons.bug_report, 'الإبلاغ عن مشكلة', 'ساعدنا في التحسين', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ReportIssueScreen()))),
           _menuItem(Icons.star_rate, 'تقييم التطبيق', 'قيمنا على المتجر', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RateAppScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
-          // ========== حول المنصة ==========
+          // ========== حول التطبيق ==========
           _sectionTitle('حول التطبيق'),
           _menuItem(Icons.info_outline, 'عن صحتك', 'الإصدار 1.0.0', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen()))),
           _menuItem(Icons.share_rounded, 'مشاركة التطبيق', 'انشر الفائدة', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ShareAppScreen()))),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
           // ========== تسجيل الخروج ==========
           SizedBox(
@@ -116,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               style: OutlinedButton.styleFrom(foregroundColor: AppColors.error, side: const BorderSide(color: AppColors.error), padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           Center(child: Text('© 2026 صحتك. جميع الحقوق محفوظة', style: TextStyle(color: AppColors.grey.withOpacity(0.7), fontSize: 11))),
         ]),
       ),
@@ -163,7 +163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           const Text('اختر اللغة', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           _langOption('العربية', '🇸🇦'),
           _langOption('English', '🇬🇧'),
           _langOption('Français', '🇫🇷'),

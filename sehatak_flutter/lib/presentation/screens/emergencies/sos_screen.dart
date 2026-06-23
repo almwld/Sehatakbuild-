@@ -57,12 +57,12 @@ class _SosScreenState extends State<SosScreen> {
                   'سيتم إرسال إنذار طوارئ خلال',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.white),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Text(
                   '$_countdown',
                   style: Theme.of(context).textTheme.displayLarge?.copyWith(color: AppColors.white, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 TextButton(
                   onPressed: _cancelSOS,
                   style: TextButton.styleFrom(
@@ -74,25 +74,25 @@ class _SosScreenState extends State<SosScreen> {
                 ),
               ] else ...[
                 const Icon(Icons.warning, size: 100, color: AppColors.white),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Text(
                   'تم إرسال إنذار الطوارئ!',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: AppColors.white, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Text(
                   'تم إخطار جهات الاتصال في الطوارئ والخدمات الطبية',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.white.withOpacity(0.9)),
                 ),
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
                 ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.call, size: 20),
                   label: const Text('الاتصال بالإسعاف'),
                   style: ElevatedButton.styleFrom(backgroundColor: AppColors.white, foregroundColor: AppColors.error),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: const Text('إغلاق', style: TextStyle(color: AppColors.white)),

@@ -39,13 +39,13 @@ class ReportsDashboard extends StatelessWidget {
                   decoration: BoxDecoration(color: (report['color'] as Color).withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
                   child: Icon(report['icon'] as IconData, color: report['color'] as Color, size: 24),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(report['title'] as String, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Row(
                         children: [
                           Text('${report['type']} - ${report['date']}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.grey)),

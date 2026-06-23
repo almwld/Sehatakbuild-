@@ -9,7 +9,7 @@ class TwoFactorAuthScreen extends StatefulWidget {
 
 class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
   bool _isEnabled = false;
-  String _selectedMethod = 'منصة المصادقة';
+  String _selectedMethod = 'تطبيق المصادقة';
   
   // كود تجريبي للعرض
   final String _secretKey = 'JBSW Y3DP EBPW C3TP';
@@ -93,12 +93,12 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
             ),
             child: Column(children: [
               Icon(_isEnabled ? Icons.shield : Icons.shield_outlined, color: Colors.white, size: 48),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(_isEnabled ? 'المصادقة الثنائية مفعلة' : 'المصادقة الثنائية غير مفعلة', style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
               Text(_isEnabled ? 'حسابك محمي بدرجة عالية' : 'فعل المصادقة لحماية حسابك', style: const TextStyle(color: Colors.white70, fontSize: 12)),
             ]),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // الخطوة 0: غير مفعل - زر التفعيل
           if (_verificationStep == 0) ...[
@@ -108,9 +108,9 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
               'تضيف طبقة حماية إضافية لحسابك. حتى لو عرف أحدهم كلمة مرورك، لن يستطيع الدخول بدون رمز التحقق.',
               AppColors.info,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _methodSelector(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             SizedBox(width: double.infinity, child: ElevatedButton.icon(onPressed: _startSetup, icon: const Icon(Icons.shield), label: const Text('تفعيل المصادقة الثنائية'), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)))),
           ],
 
@@ -121,9 +121,9 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const Text('1. امسح رمز QR أو أدخل المفتاح', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                SizedBox(height: 8),
-                const Text('افتح منصة المصادقة (Google Authenticator) وامسح الرمز:', style: TextStyle(fontSize: 12, color: AppColors.darkGrey)),
-                SizedBox(height: 12),
+                const SizedBox(height: 8),
+                const Text('افتح تطبيق المصادقة (Google Authenticator) وامسح الرمز:', style: TextStyle(fontSize: 12, color: AppColors.darkGrey)),
+                const SizedBox(height: 12),
                 Center(
                   child: Container(
                     width: 180, height: 180,
@@ -131,11 +131,11 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
                     child: const Center(child: Icon(Icons.qr_code_2, size: 120, color: AppColors.primary)),
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 _codeBox('المفتاح السري:', _secretKey),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 const Text('2. أدخل رمز التحقق', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 // 6 خانات للكود
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: List.generate(6, (i) => SizedBox(
                   width: 45, height: 55,
@@ -150,7 +150,7 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
                     onChanged: (v) { if (v.isNotEmpty && i < 5) _focusNodes[i + 1].requestFocus(); },
                   ),
                 ))),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _confirmCode, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('تحقق وتفعيل'))),
               ]),
             ),
@@ -159,7 +159,7 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
           // الخطوة 3: مفعل - إدارة
           if (_verificationStep == 3) ...[
             _infoCard(Icons.check_circle, 'الحالة', 'المصادقة الثنائية مفعلة. تم آخر تحقق: اليوم', AppColors.success),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             
             // رموز الاسترداد
             GestureDetector(
@@ -168,22 +168,22 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [const Icon(Icons.key, color: AppColors.warning), SizedBox(width: 8), const Text('رموز الاسترداد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)), const Spacer(), Icon(_showBackupCodes ? Icons.expand_less : Icons.expand_more)]),
+                  Row(children: [const Icon(Icons.key, color: AppColors.warning), const SizedBox(width: 8), const Text('رموز الاسترداد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)), const Spacer(), Icon(_showBackupCodes ? Icons.expand_less : Icons.expand_more)]),
                   if (_showBackupCodes) ...[
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     const Text('احفظ هذه الرموز في مكان آمن. تستخدم لمرة واحدة فقط.', style: TextStyle(fontSize: 10, color: AppColors.grey)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ..._backupCodes.map((c) => Container(
                       margin: const EdgeInsets.only(bottom: 4),
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(8)),
-                      child: Row(children: [const Icon(Icons.content_copy, size: 14, color: AppColors.grey), SizedBox(width: 8), Text(c, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, letterSpacing: 2))]),
+                      child: Row(children: [const Icon(Icons.content_copy, size: 14, color: AppColors.grey), const SizedBox(width: 8), Text(c, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, letterSpacing: 2))]),
                     )),
                   ],
                 ]),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             
             // إعادة تعيين
             Container(
@@ -197,7 +197,7 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
               ]),
             ),
           ],
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ]),
       ),
     );
@@ -207,7 +207,7 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(color: color.withOpacity(0.05), borderRadius: BorderRadius.circular(14), border: Border.all(color: color.withOpacity(0.2))),
-      child: Row(children: [Icon(icon, color: color, size: 28), SizedBox(width: 10), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color)), Text(desc, style: const TextStyle(fontSize: 11, color: AppColors.darkGrey))]))]),
+      child: Row(children: [Icon(icon, color: color, size: 28), const SizedBox(width: 10), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color)), Text(desc, style: const TextStyle(fontSize: 11, color: AppColors.darkGrey))]))]),
     );
   }
 
@@ -217,7 +217,7 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)]),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Text('طريقة المصادقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-        RadioListTile<String>(value: 'منصة المصادقة', groupValue: _selectedMethod, title: const Text('منصة المصادقة'), subtitle: const Text('Google Authenticator'), activeColor: AppColors.primary, onChanged: (v) => setState(() => _selectedMethod = v!)),
+        RadioListTile<String>(value: 'تطبيق المصادقة', groupValue: _selectedMethod, title: const Text('تطبيق المصادقة'), subtitle: const Text('Google Authenticator'), activeColor: AppColors.primary, onChanged: (v) => setState(() => _selectedMethod = v!)),
         RadioListTile<String>(value: 'رسالة نصية', groupValue: _selectedMethod, title: const Text('رسالة نصية SMS'), subtitle: const Text('رمز عبر رسالة نصية'), activeColor: AppColors.primary, onChanged: (v) => setState(() => _selectedMethod = v!)),
         RadioListTile<String>(value: 'بريد إلكتروني', groupValue: _selectedMethod, title: const Text('البريد الإلكتروني'), subtitle: const Text('رمز عبر البريد'), activeColor: AppColors.primary, onChanged: (v) => setState(() => _selectedMethod = v!)),
       ]),
@@ -232,7 +232,7 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
         Text(label, style: const TextStyle(fontSize: 12, color: AppColors.grey)),
         const Spacer(),
         Text(code, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, letterSpacing: 2, color: AppColors.primary)),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         GestureDetector(onTap: () {}, child: const Icon(Icons.content_copy, size: 18, color: AppColors.grey)),
       ]),
     );
