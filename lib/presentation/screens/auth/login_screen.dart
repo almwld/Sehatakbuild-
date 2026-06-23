@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sehatak/core/constants/app_colors.dart';
-import 'package:sehatak/core/services/api_service.dart';
+import 'package:sehatak/core/services/biometric_service.dart';
+import 'package:sehatak/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:sehatak/presentation/screens/home/home_screen.dart';
+import 'package:sehatak/presentation/screens/terms/terms_screen.dart';
+import 'package:sehatak/presentation/screens/privacy/privacy_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,231 +14,153 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  bool _obscurePassword = true;
-  bool _obscureConfirm = true;
-  bool _agreeTerms = false;
-  bool _isLoading = false;
-
-  final _loginEmailController = TextEditingController(text: 'ahmed@email.com');
-  final _loginPasswordController = TextEditingController(text: '123456');
-  final _registerNameController = TextEditingController();
-  final _registerEmailController = TextEditingController();
-  final _registerPhoneController = TextEditingController();
-  final _registerPasswordController = TextEditingController();
-  final _registerConfirmController = TextEditingController();
+  late TabController _tabCtrl;
+  final _email = TextEditingController();
+  final _pass = TextEditingController();
+  final _name = TextEditingController();
+  final _regEmail = TextEditingController();
+  final _regPhone = TextEditingController();
+  final _regPass = TextEditingController();
+  final _regConfirm = TextEditingController();
+  final _specialization = TextEditingController();
+  final _licenseNumber = TextEditingController();
+  
+  bool _obscure = true, _obscure2 = true, _agree = false, _rememberMe = true;
+  final BiometricService _bio = BiometricService();
+  bool _hasBiometric = false;
+  String _bioName = 'البصمة';
+  String _accountType = 'patient';
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabCtrl = TabController(length: 2, vsync: this);
+    _checkBiometric();
   }
 
-  Future<void> _handleLogin() async {
-    setState(() => _isLoading = true);
-    try {
-      final result = await ApiService.login(
-        email: _loginEmailController.text.trim(),
-        password: _loginPasswordController.text.trim(),
-      );
-      if (result['token'] != null) {
-        if (!mounted) return;
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
-          (route) => false,
-        );
-      } else {
-        _showError(result['error'] ?? 'فشل تسجيل الدخول');
-      }
-    } catch (e) {
-      _showError('تعذر الاتصال بالخادم. يعمل التطبيق محلياً.');
-      // الدخول بدون API للتطوير
-      if (!mounted) return;
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-        (route) => false,
-      );
-    }
-    setState(() => _isLoading = false);
+  Future<void> _checkBiometric() async {
+    final a = await _bio.isAvailable();
+    if (a) { final t = await _bio.getAvailableTypes(); setState(() { _hasBiometric = true; _bioName = _bio.getBiometricName(t); }); }
   }
 
-  Future<void> _handleRegister() async {
-    if (_registerPasswordController.text != _registerConfirmController.text) {
-      _showError('كلمتا المرور غير متطابقتين');
-      return;
-    }
-    setState(() => _isLoading = true);
-    try {
-      final result = await ApiService.register(
-        fullName: _registerNameController.text.trim(),
-        email: _registerEmailController.text.trim(),
-        phone: _registerPhoneController.text.trim(),
-        password: _registerPasswordController.text.trim(),
-      );
-      if (result['token'] != null) {
-        if (!mounted) return;
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
-          (route) => false,
-        );
-      } else {
-        _showError(result['error'] ?? 'فشل التسجيل');
-      }
-    } catch (e) {
-      _showError('تعذر الاتصال بالخادم');
-    }
-    setState(() => _isLoading = false);
+  void _guest() => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const HomeScreen()), (r) => false);
+  
+  void _login() {
+    if (_email.text.isEmpty || _pass.text.isEmpty) { _showMsg('املأ الحقول', true); return; }
+    context.read<AuthBloc>().add(LoginWithEmail(email: _email.text.trim(), password: _pass.text.trim(), rememberMe: _rememberMe));
+  }
+  
+  void _register() {
+    if (!_agree) { _showMsg('وافق على الشروط', true); return; }
+    if (_regPass.text != _regConfirm.text) { _showMsg('كلمتا المرور غير متطابقتين', true); return; }
+    if (_regPass.text.length < 6) { _showMsg('6 أحرف', true); return; }
+    context.read<AuthBloc>().add(RegisterWithEmail(
+      name: _name.text.trim(), email: _regEmail.text.trim(), phone: _regPhone.text.trim(),
+      password: _regPass.text.trim(), accountType: _accountType,
+      specialization: _accountType == 'doctor' ? _specialization.text.trim() : '',
+      licenseNumber: _accountType == 'doctor' ? _licenseNumber.text.trim() : '',
+    ));
   }
 
-  void _showError(String message) {
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.error),
-    );
+  @override
+  void dispose() {
+    _tabCtrl.dispose(); _email.dispose(); _pass.dispose(); _name.dispose();
+    _regEmail.dispose(); _regPhone.dispose(); _regPass.dispose(); _regConfirm.dispose();
+    _specialization.dispose(); _licenseNumber.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Scaffold(
-      body: SafeArea(
-        child: Column(children: [
-          const SizedBox(height: 20),
-          Container(
-            width: 80, height: 80,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.3), blurRadius: 15)],
-            ),
-            child: const Icon(Icons.health_and_safety, color: Colors.white, size: 45),
-          ),
-          const SizedBox(height: 10),
-          const Text('صحتك', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.primary)),
-          const Text('صحتك، أولويتنا', style: TextStyle(fontSize: 13, color: AppColors.grey)),
-          const SizedBox(height: 16),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: TabBar(
-              controller: _tabController,
-              indicator: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(12)),
-              indicatorSize: TabBarIndicatorSize.tab,
-              labelColor: Colors.white,
-              unselectedLabelColor: AppColors.darkGrey,
-              labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              padding: const EdgeInsets.all(4),
-              tabs: const [Tab(text: 'تسجيل الدخول'), Tab(text: 'إنشاء حساب')],
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildLoginTab(isDark),
-                _buildRegisterTab(isDark),
-              ],
-            ),
-          ),
-        ]),
+    final d = Theme.of(context).brightness == Brightness.dark;
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (ctx, s) {
+        if (s is Authenticated) {
+          Navigator.of(ctx).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (_, __, ___) => const HomeScreen(), transitionsBuilder: (_, a, __, ch) => FadeTransition(opacity: a, child: ch), transitionDuration: const Duration(milliseconds: 400)), (r) => false);
+        }
+        if (s is AuthError) _showMsg(s.message, true);
+      },
+      builder: (ctx, s) => Scaffold(
+        body: Container(
+          decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: d ? [const Color(0xFF0B1121), const Color(0xFF1A2540)] : AppColors.primaryGradient)),
+          child: SafeArea(child: Stack(children: [
+            Positioned(top: -80, right: -60, child: Container(width: 200, height: 200, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white.withOpacity(0.04)))),
+            Center(child: SingleChildScrollView(padding: const EdgeInsets.all(20), child: Column(children: [
+              SizedBox(height: 20),
+              Container(width: 70, height: 70, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)), child: const Icon(Icons.health_and_safety, size: 38, color: AppColors.primary)),
+              SizedBox(height: 8),
+              const Text('صحتك', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white)),
+              SizedBox(height: 20),
+              Container(decoration: BoxDecoration(color: d ? const Color(0xFF1A2540) : Colors.white, borderRadius: BorderRadius.circular(20)), child: Column(children: [
+                Container(margin: const EdgeInsets.all(14), decoration: BoxDecoration(color: d ? const Color(0xFF0B1121) : Colors.grey[100], borderRadius: BorderRadius.circular(14)), child: TabBar(controller: _tabCtrl, indicator: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(12)), labelColor: Colors.white, unselectedLabelColor: Colors.grey, padding: const EdgeInsets.all(4), tabs: const [Tab(text: 'تسجيل الدخول'), Tab(text: 'إنشاء حساب')])),
+                SizedBox(height: _tabCtrl.index == 0 ? 280 : (_accountType == 'doctor' ? 560 : 480), child: TabBarView(controller: _tabCtrl, children: [
+                  // ========== تبويب تسجيل الدخول ==========
+                  Padding(padding: const EdgeInsets.all(16), child: Column(children: [
+                    TextField(controller: _email, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'البريد الإلكتروني', prefixIcon: const Icon(Icons.email_outlined, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    SizedBox(height: 10),
+                    TextField(controller: _pass, obscureText: _obscure, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'كلمة المرور', prefixIcon: const Icon(Icons.lock_outline, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    SizedBox(height: 4),
+                    // نسيت كلمة المرور + تذكرني
+                    Row(children: [
+                      Row(children: [
+                        SizedBox(width: 20, height: 20, child: Checkbox(value: _rememberMe, activeColor: AppColors.primary, onChanged: (v) => setState(() => _rememberMe = v!), materialTapTargetSize: MaterialTapTargetSize.shrinkWrap)),
+                        const Text('تذكرني', style: TextStyle(fontSize: 11)),
+                      ]),
+                      const Spacer(),
+                      TextButton(onPressed: () {
+                        if (_email.text.isEmpty) { _showMsg('أدخل بريدك الإلكتروني', true); return; }
+                        context.read<AuthBloc>().add(ResetPassword(_email.text.trim()));
+                      }, child: const Text('نسيت كلمة المرور؟', style: TextStyle(fontSize: 11))),
+                    ]),
+                    SizedBox(height: 8),
+                    SizedBox(width: double.infinity, height: 46, child: ElevatedButton(onPressed: s is AuthLoading ? null : _login, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), child: s is AuthLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('تسجيل الدخول', style: TextStyle(fontSize: 15)))),
+                  ])),
+                  // ========== تبويب إنشاء حساب ==========
+                  Padding(padding: const EdgeInsets.all(16), child: Column(children: [
+                    // اختيار نوع الحساب
+                    Container(padding: const EdgeInsets.all(4), decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.05), borderRadius: BorderRadius.circular(12)), child: Row(children: [
+                      Expanded(child: GestureDetector(onTap: () => setState(() => _accountType = 'patient'), child: Container(padding: const EdgeInsets.symmetric(vertical: 8), decoration: BoxDecoration(color: _accountType == 'patient' ? AppColors.primary : Colors.transparent, borderRadius: BorderRadius.circular(10)), child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.person, color: _accountType == 'patient' ? Colors.white : AppColors.darkGrey, size: 18), SizedBox(width: 4), Text('مريض', style: TextStyle(color: _accountType == 'patient' ? Colors.white : AppColors.darkGrey, fontWeight: FontWeight.bold, fontSize: 13))])))),
+                      Expanded(child: GestureDetector(onTap: () => setState(() => _accountType = 'doctor'), child: Container(padding: const EdgeInsets.symmetric(vertical: 8), decoration: BoxDecoration(color: _accountType == 'doctor' ? AppColors.primary : Colors.transparent, borderRadius: BorderRadius.circular(10)), child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.medical_services, color: _accountType == 'doctor' ? Colors.white : AppColors.darkGrey, size: 18), SizedBox(width: 4), Text('طبيب', style: TextStyle(color: _accountType == 'doctor' ? Colors.white : AppColors.darkGrey, fontWeight: FontWeight.bold, fontSize: 13))])))),
+                    ])),
+                    SizedBox(height: 8),
+                    TextField(controller: _name, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'الاسم الكامل', prefixIcon: const Icon(Icons.person_outline, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    SizedBox(height: 8),
+                    TextField(controller: _regEmail, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'البريد الإلكتروني', prefixIcon: const Icon(Icons.email_outlined, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    SizedBox(height: 8),
+                    TextField(controller: _regPhone, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'رقم الهاتف', prefixIcon: const Icon(Icons.phone_android, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    // حقول الطبيب
+                    if (_accountType == 'doctor') ...[
+                      SizedBox(height: 8),
+                      TextField(controller: _specialization, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'التخصص الطبي', hintText: 'مثال: باطنية، أطفال...', prefixIcon: const Icon(Icons.medical_services, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                      SizedBox(height: 8),
+                      TextField(controller: _licenseNumber, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'رقم الترخيص', prefixIcon: const Icon(Icons.badge, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    ],
+                    SizedBox(height: 8),
+                    TextField(controller: _regPass, obscureText: _obscure, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'كلمة المرور', prefixIcon: const Icon(Icons.lock_outline, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    SizedBox(height: 8),
+                    TextField(controller: _regConfirm, obscureText: _obscure2, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'تأكيد كلمة المرور', prefixIcon: const Icon(Icons.lock_outline, size: 20), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10))),
+                    SizedBox(height: 6),
+                    Row(children: [SizedBox(width: 20, height: 20, child: Checkbox(value: _agree, activeColor: AppColors.primary, onChanged: (v) => setState(() => _agree = v!), materialTapTargetSize: MaterialTapTargetSize.shrinkWrap)), const Text('أوافق على الشروط', style: TextStyle(fontSize: 10))]),
+                    SizedBox(height: 6),
+                    SizedBox(width: double.infinity, height: 46, child: ElevatedButton(onPressed: s is AuthLoading ? null : _register, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), child: s is AuthLoading ? const CircularProgressIndicator(color: Colors.white) : Text(_accountType == 'doctor' ? 'تسجيل كطبيب' : 'إنشاء حساب', style: const TextStyle(fontSize: 15)))),
+                  ])),
+                ])),
+              ])),
+              SizedBox(height: 16),
+              Row(children: [
+                Expanded(child: SizedBox(height: 46, child: OutlinedButton(onPressed: () => context.read<AuthBloc>().add(LoginWithGoogle()), style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.white30), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)), backgroundColor: Colors.white.withOpacity(0.15)), child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.g_mobiledata, color: Colors.white, size: 20), SizedBox(width: 4), Text("Google", style: TextStyle(fontSize: 13, color: Colors.white))])))),
+                SizedBox(width: 10),
+                Expanded(child: SizedBox(height: 46, child: OutlinedButton(onPressed: () {}, style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.white30), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)), backgroundColor: Colors.white.withOpacity(0.15)), child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.apple, color: Colors.white, size: 20), SizedBox(width: 4), Text("Apple", style: TextStyle(fontSize: 13, color: Colors.white))])))),
+              ]),
+              if (_hasBiometric) ...[SizedBox(height: 10), GestureDetector(onTap: () async { if (await _bio.authenticate(reason: 'الدخول بـ $_bioName')) _guest(); }, child: Container(width: 46, height: 46, decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 1.5)), child: Icon(Icons.fingerprint, color: Colors.white, size: 26))), SizedBox(height: 4), Text('$_bioName', style: const TextStyle(color: Colors.white70, fontSize: 11))],
+              SizedBox(height: 8),
+              TextButton(onPressed: _guest, child: const Text('تصفح كضيف', style: TextStyle(color: Colors.white60, fontSize: 13, fontFamily: 'Cairo'))),
+            ]))),
+          ])),
+        ),
       ),
     );
   }
 
-  Widget _buildLoginTab(bool isDark) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const SizedBox(height: 10),
-        const Text('مرحباً بعودتك!', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-        const Text('سجل دخولك للمتابعة', style: TextStyle(color: AppColors.grey, fontSize: 14)),
-        const SizedBox(height: 28),
-        TextField(
-          controller: _loginEmailController,
-          keyboardType: TextInputType.emailAddress,
-          textAlign: TextAlign.right,
-          decoration: InputDecoration(
-            labelText: 'البريد الإلكتروني',
-            prefixIcon: const Icon(Icons.email_outlined),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-            filled: true,
-            fillColor: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow.withOpacity(0.5),
-          ),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _loginPasswordController,
-          obscureText: _obscurePassword,
-          textAlign: TextAlign.right,
-          decoration: InputDecoration(
-            labelText: 'كلمة المرور',
-            prefixIcon: const Icon(Icons.lock_outline),
-            suffixIcon: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => _obscurePassword = !_obscurePassword)),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-            filled: true,
-            fillColor: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow.withOpacity(0.5),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Align(alignment: Alignment.centerLeft, child: TextButton(onPressed: () {}, child: const Text('نسيت كلمة المرور؟'))),
-        const SizedBox(height: 20),
-        SizedBox(
-          height: 54,
-          child: ElevatedButton(
-            onPressed: _isLoading ? null : _handleLogin,
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)), elevation: 3),
-            child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('تسجيل الدخول', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          ),
-        ),
-        const SizedBox(height: 24),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const Text('ليس لديك حساب؟', style: TextStyle(color: AppColors.darkGrey)),
-          TextButton(onPressed: () => _tabController.animateTo(1), child: const Text('إنشاء حساب', style: TextStyle(fontWeight: FontWeight.bold))),
-        ]),
-      ]),
-    );
-  }
-
-  Widget _buildRegisterTab(bool isDark) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const SizedBox(height: 10),
-        const Text('انضم إلى صحتك', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-        const Text('أنشئ حسابك وابدأ رحلتك الصحية', style: TextStyle(color: AppColors.grey, fontSize: 14)),
-        const SizedBox(height: 24),
-        TextField(controller: _registerNameController, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'الاسم الكامل', prefixIcon: const Icon(Icons.person_outline), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), filled: true, fillColor: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow.withOpacity(0.5))),
-        const SizedBox(height: 14),
-        TextField(controller: _registerEmailController, keyboardType: TextInputType.emailAddress, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'البريد الإلكتروني', prefixIcon: const Icon(Icons.email_outlined), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), filled: true, fillColor: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow.withOpacity(0.5))),
-        const SizedBox(height: 14),
-        TextField(controller: _registerPhoneController, keyboardType: TextInputType.phone, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'رقم الهاتف', prefixIcon: const Icon(Icons.phone_android), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), filled: true, fillColor: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow.withOpacity(0.5))),
-        const SizedBox(height: 14),
-        TextField(controller: _registerPasswordController, obscureText: _obscurePassword, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'كلمة المرور', prefixIcon: const Icon(Icons.lock_outline), suffixIcon: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => _obscurePassword = !_obscurePassword)), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), filled: true, fillColor: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow.withOpacity(0.5))),
-        const SizedBox(height: 14),
-        TextField(controller: _registerConfirmController, obscureText: _obscureConfirm, textAlign: TextAlign.right, decoration: InputDecoration(labelText: 'تأكيد كلمة المرور', prefixIcon: const Icon(Icons.lock_outline), suffixIcon: IconButton(icon: Icon(_obscureConfirm ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm)), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), filled: true, fillColor: isDark ? const Color(0xFF1A2540) : AppColors.surfaceContainerLow.withOpacity(0.5))),
-        const SizedBox(height: 16),
-        Row(children: [Checkbox(value: _agreeTerms, activeColor: AppColors.primary, onChanged: (v) => setState(() => _agreeTerms = v!)), const Expanded(child: Text('أوافق على الشروط والأحكام', style: TextStyle(fontSize: 11, color: AppColors.darkGrey)))]),
-        const SizedBox(height: 18),
-        SizedBox(
-          height: 54,
-          child: ElevatedButton(
-            onPressed: (_agreeTerms && !_isLoading) ? _handleRegister : null,
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)), elevation: 3),
-            child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('إنشاء حساب', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          ),
-        ),
-        const SizedBox(height: 24),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const Text('لديك حساب بالفعل؟', style: TextStyle(color: AppColors.darkGrey)),
-          TextButton(onPressed: () => _tabController.animateTo(0), child: const Text('تسجيل الدخول', style: TextStyle(fontWeight: FontWeight.bold))),
-        ]),
-      ]),
-    );
-  }
+  void _showMsg(String m, bool e) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(m), backgroundColor: e ? Colors.red : Colors.green, behavior: SnackBarBehavior.floating, margin: const EdgeInsets.all(16)));
 }
