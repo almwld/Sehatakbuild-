@@ -28,8 +28,8 @@ jobs:
 
       - name: 🔑 Add google-services.json
         run: |
-          mkdir -p android/app
-          cat > android/app/google-services.json << 'EOF'
+          mkdir -p sehatak_flutter/android/app
+          cat > sehatak_flutter/android/app/google-services.json << 'EOF'
           {
             "project_info": {
               "project_number": "1053269106596",
@@ -54,21 +54,25 @@ jobs:
           EOF
 
       - name: 📦 Install dependencies
-        run: flutter pub get
+        run: |
+          cd sehatak_flutter
+          flutter pub get
 
       - name: 🔨 Build APK
-        run: flutter build apk --release --split-per-abi
+        run: |
+          cd sehatak_flutter
+          flutter build apk --release --split-per-abi
 
       - name: 📤 Upload arm64-v8a
         uses: actions/upload-artifact@v4
         with:
           name: app-arm64-v8a
-          path: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+          path: sehatak_flutter/build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
           retention-days: 30
 
       - name: 📤 Upload armeabi-v7a
         uses: actions/upload-artifact@v4
         with:
           name: app-armeabi-v7a
-          path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+          path: sehatak_flutter/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
           retention-days: 30
