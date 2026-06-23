@@ -35,3 +35,11 @@ class AppColors {
   static const Color pink = Color(0xFFEC4899);
   static const Color shadow = Color(0xFF000000);
 }
+
+  // التدرجات
+  static const List<Color> primaryGradient = [
+    Color(0xFF00796B),
+    Color(0xFF004D40),
+  ];
+
+  static const Color white70 = Colors.white70;
