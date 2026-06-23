@@ -1,145 +1,147 @@
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../data/models/user_models/user_model.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-abstract class AuthEvent extends Equatable { const AuthEvent(); }
-class AppStarted extends AuthEvent { @override List<Object?> get props => []; }
+// ========== EVENTS ==========
+abstract class AuthEvent {}
+class AppStarted extends AuthEvent {}
 class LoginWithEmail extends AuthEvent {
-  final String email, password;
+  final String email;
+  final String password;
   final bool rememberMe;
-  const LoginWithEmail({required this.email, required this.password, this.rememberMe = true});
-  @override List<Object?> get props => [email, password, rememberMe];
+  LoginWithEmail({required this.email, required this.password, this.rememberMe = true});
 }
-class LoginWithGoogle extends AuthEvent { @override List<Object?> get props => []; }
-class LoginWithBiometric extends AuthEvent { @override List<Object?> get props => []; }
 class RegisterWithEmail extends AuthEvent {
-  final String name, email, phone, password, accountType, specialization, licenseNumber;
-  const RegisterWithEmail({required this.name, required this.email, required this.phone, required this.password, this.accountType = 'patient', this.specialization = '', this.licenseNumber = ''});
-  @override List<Object?> get props => [name, email, phone, password, accountType];
+  final String name;
+  final String email;
+  final String phone;
+  final String password;
+  final String accountType;
+  final String? specialization;
+  final String? licenseNumber;
+  RegisterWithEmail({
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.password,
+    this.accountType = 'patient',
+    this.specialization,
+    this.licenseNumber,
+  });
 }
+class LoginWithGoogle extends AuthEvent {}
 class ResetPassword extends AuthEvent {
   final String email;
-  const ResetPassword(this.email);
-  @override List<Object?> get props => [email];
+  ResetPassword(this.email);
 }
-class Logout extends AuthEvent { @override List<Object?> get props => []; }
+class LogoutRequested extends AuthEvent {}
 
-abstract class AuthState extends Equatable { const AuthState(); }
-class AuthInitial extends AuthState { @override List<Object?> get props => []; }
-class AuthLoading extends AuthState { @override List<Object?> get props => []; }
-class Authenticated extends AuthState { final UserModel user; const Authenticated(this.user); @override List<Object?> get props => [user]; }
-class Unauthenticated extends AuthState { @override List<Object?> get props => []; }
-class AuthError extends AuthState { final String message; const AuthError(this.message); @override List<Object?> get props => [message]; }
-class PasswordResetSent extends AuthState { @override List<Object?> get props => []; }
+// ========== STATES ==========
+abstract class AuthState {}
+class AuthInitial extends AuthState {}
+class AuthLoading extends AuthState {}
+class Authenticated extends AuthState {}
+class Unauthenticated extends AuthState {}
+class AuthError extends AuthState {
+  final String message;
+  AuthError(this.message);
+}
+class PasswordResetSent extends AuthState {}
 
+// ========== BLOC ==========
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   AuthBloc() : super(AuthInitial()) {
     on<AppStarted>(_onAppStarted);
-    on<LoginWithEmail>(_onLogin);
-    on<LoginWithGoogle>(_onGoogle);
-    on<LoginWithBiometric>(_onBiometric);
-    on<RegisterWithEmail>(_onRegister);
+    on<LoginWithEmail>(_onLoginWithEmail);
+    on<RegisterWithEmail>(_onRegisterWithEmail);
+    on<LoginWithGoogle>(_onLoginWithGoogle);
     on<ResetPassword>(_onResetPassword);
-    on<Logout>(_onLogout);
+    on<LogoutRequested>(_onLogout);
   }
 
-  void _onAppStarted(AppStarted e, Emitter<AuthState> emit) async {
+  void _onAppStarted(AppStarted event, Emitter<AuthState> emit) {
     final user = _auth.currentUser;
     if (user != null) {
-      emit(Authenticated(UserModel(id: user.uid, email: user.email, fullName: user.displayName)));
+      emit(Authenticated());
     } else {
       emit(Unauthenticated());
     }
   }
 
-  Future<void> _onLogin(LoginWithEmail e, Emitter<AuthState> emit) async {
+  Future<void> _onLoginWithEmail(LoginWithEmail event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      await _auth.signInWithEmailAndPassword(email: e.email.trim(), password: e.password);
-      if (e.rememberMe) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('saved_email', e.email.trim());
-        await prefs.setString('saved_password', e.password);
-      }
-      final u = _auth.currentUser!;
-      emit(Authenticated(UserModel(id: u.uid, email: u.email)));
-    } on FirebaseAuthException catch (ex) { emit(AuthError(_msg(ex.code))); }
-  }
-
-  Future<void> _onGoogle(LoginWithGoogle e, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    try {
-      // محاولة Google Sign-In
-      final GoogleSignIn googleSignIn = GoogleSignIn();
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) { emit(Unauthenticated()); return; }
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      await _auth.signInWithCredential(credential);
-      final u = _auth.currentUser!;
-      emit(Authenticated(UserModel(id: u.uid, email: u.email, fullName: u.displayName)));
-    } catch (ex) {
-      emit(AuthError('فشل تسجيل Google. تأكد من اتصال الإنترنت'));
+      await _auth.signInWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      );
+      emit(Authenticated());
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(e.message ?? 'فشل تسجيل الدخول'));
     }
   }
 
-  Future<void> _onBiometric(LoginWithBiometric e, Emitter<AuthState> emit) async {
-    final prefs = await SharedPreferences.getInstance();
-    final email = prefs.getString('saved_email');
-    final password = prefs.getString('saved_password');
-    if (email != null && password != null) {
-      add(LoginWithEmail(email: email, password: password));
-    } else {
-      emit(AuthError('لا توجد بيانات محفوظة. سجل دخول أولاً'));
-    }
-  }
-
-  Future<void> _onRegister(RegisterWithEmail e, Emitter<AuthState> emit) async {
+  Future<void> _onRegisterWithEmail(RegisterWithEmail event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final cred = await _auth.createUserWithEmailAndPassword(email: e.email.trim(), password: e.password);
-      await _firestore.collection('users').doc(cred.user!.uid).set({
-        'id': cred.user!.uid, 'email': e.email, 'phone': e.phone,
-        'fullName': e.name, 'role': e.accountType, 'specialization': e.specialization,
-        'licenseNumber': e.licenseNumber, 'createdAt': FieldValue.serverTimestamp(),
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      );
+      final user = userCredential.user!;
+      await _firestore.collection('users').doc(user.uid).set({
+        'uid': user.uid,
+        'name': event.name,
+        'email': event.email,
+        'phone': event.phone,
+        'accountType': event.accountType,
+        'specialization': event.specialization,
+        'licenseNumber': event.licenseNumber,
+        'createdAt': FieldValue.serverTimestamp(),
       });
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('saved_email', e.email.trim());
-      await prefs.setString('saved_password', e.password);
-      emit(Authenticated(UserModel(id: cred.user!.uid, email: e.email, fullName: e.name, phone: e.phone)));
-    } on FirebaseAuthException catch (ex) { emit(AuthError(_msg(ex.code))); }
+      emit(Authenticated());
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(e.message ?? 'فشل إنشاء الحساب'));
+    }
   }
 
-  Future<void> _onResetPassword(ResetPassword e, Emitter<AuthState> emit) async {
+  Future<void> _onLoginWithGoogle(LoginWithGoogle event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      await _auth.sendPasswordResetEmail(email: e.email.trim());
-      emit(PasswordResetSent());
-    } on FirebaseAuthException catch (ex) { emit(AuthError(_msg(ex.code))); }
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        emit(Unauthenticated());
+        return;
+      }
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await _auth.signInWithCredential(credential);
+      emit(Authenticated());
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
   }
 
-  Future<void> _onLogout(Logout e, Emitter<AuthState> emit) async {
+  Future<void> _onResetPassword(ResetPassword event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      await _auth.sendPasswordResetEmail(email: event.email);
+      emit(PasswordResetSent());
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(e.message ?? 'فشل إرسال رابط الاستعادة'));
+    }
+  }
+
+  Future<void> _onLogout(LogoutRequested event, Emitter<AuthState> emit) async {
     await _auth.signOut();
     emit(Unauthenticated());
-  }
-
-  String _msg(String code) {
-    switch (code) {
-      case 'user-not-found': return 'المستخدم غير موجود - أنشئ حساباً أولاً';
-      case 'wrong-password': return 'كلمة المرور غير صحيحة';
-      case 'email-already-in-use': return 'البريد الإلكتروني مسجل مسبقاً';
-      case 'weak-password': return 'كلمة المرور ضعيفة (6 أحرف على الأقل)';
-      case 'invalid-email': return 'بريد إلكتروني غير صالح';
-      case 'invalid-credential': return 'بيانات الدخول غير صحيحة';
-      default: return code;
-    }
   }
 }
